@@ -30,6 +30,9 @@ namespace ProspectorJourney.Room
         [Tooltip("Custom attach orientation angles inside the hand.")]
         [SerializeField] private Vector3 m_AttachLocalEulerAngles = Vector3.zero;
 
+        [Tooltip("Distance in meters at which secondary hand releases grip if pulled away.")]
+        [SerializeField] private float m_SecondaryBreakDistance = 0.85f;
+
         private Rigidbody m_Rigidbody;
         private XRGrabInteractable m_GrabInteractable;
         private Transform m_AttachPoint;
@@ -64,6 +67,7 @@ namespace ProspectorJourney.Room
                 m_GrabInteractable.useDynamicAttach = false;
                 m_GrabInteractable.matchAttachPosition = true;
                 m_GrabInteractable.matchAttachRotation = true;
+                m_GrabInteractable.snapToColliderVolume = false;
                 m_GrabInteractable.attachEaseInTime = 0f;
                 m_GrabInteractable.farAttachMode = InteractableFarAttachMode.Near;
 
@@ -73,32 +77,47 @@ namespace ProspectorJourney.Room
 
         private void SetupAttachTransform()
         {
-            m_AttachPrimary = m_GrabInteractable.attachTransform;
-            m_AttachSecondary = m_GrabInteractable.secondaryAttachTransform ?? transform.Find("attach2");
+            Transform attach1 = transform.Find("attach1");
+            Transform attach2 = transform.Find("attach2");
 
-            if (m_AttachPrimary != null)
+            if (attach1 != null)
             {
-                m_AttachPoint = m_AttachPrimary;
-                return;
+                m_AttachPrimary = attach1;
+                m_AttachPoint = attach1;
+                m_GrabInteractable.attachTransform = attach1;
             }
-
-            // Find existing child or create new
-            Transform existing = transform.Find("attach1") ?? transform.Find("Attach_Point");
-            if (existing != null)
+            else if (m_GrabInteractable.attachTransform != null)
             {
-                m_AttachPoint = existing;
+                m_AttachPrimary = m_GrabInteractable.attachTransform;
+                m_AttachPoint = m_AttachPrimary;
             }
             else
             {
-                GameObject attachGo = new GameObject("Attach_Point");
-                attachGo.transform.SetParent(transform, false);
-                m_AttachPoint = attachGo.transform;
-
-                ApplyDefaultAttachTransform(m_AttachPoint);
+                Transform existing = transform.Find("Attach_Point");
+                if (existing != null)
+                {
+                    m_AttachPoint = existing;
+                }
+                else
+                {
+                    GameObject attachGo = new GameObject("Attach_Point");
+                    attachGo.transform.SetParent(transform, false);
+                    m_AttachPoint = attachGo.transform;
+                    ApplyDefaultAttachTransform(m_AttachPoint);
+                }
+                m_GrabInteractable.attachTransform = m_AttachPoint;
+                m_AttachPrimary = m_AttachPoint;
             }
 
-            m_GrabInteractable.attachTransform = m_AttachPoint;
-            m_AttachPrimary = m_AttachPoint;
+            if (attach2 != null)
+            {
+                m_AttachSecondary = attach2;
+                m_GrabInteractable.secondaryAttachTransform = attach2;
+            }
+            else
+            {
+                m_AttachSecondary = m_GrabInteractable.secondaryAttachTransform;
+            }
         }
 
         private void ApplyDefaultAttachTransform(Transform attach)
@@ -133,8 +152,8 @@ namespace ProspectorJourney.Room
             }
             else if (n.Contains("pan"))
             {
-                attach.localPosition = new Vector3(0f, 0.04f, -0.22f);
-                attach.localRotation = Quaternion.Euler(15f, 0f, 0f);
+                attach.localPosition = new Vector3(0.20f, 0.05f, 0f);
+                attach.localRotation = Quaternion.identity;
             }
             else if (n.Contains("bottle"))
             {
@@ -169,9 +188,8 @@ namespace ProspectorJourney.Room
         {
             if (m_GrabInteractable != null)
             {
-                m_GrabInteractable.hoverEntered.AddListener(OnHoverEntered);
-                m_GrabInteractable.firstSelectEntered.AddListener(OnGrabbed);
-                m_GrabInteractable.lastSelectExited.AddListener(OnDropped);
+                m_GrabInteractable.selectEntered.AddListener(OnSelectEntered);
+                m_GrabInteractable.selectExited.AddListener(OnSelectExited);
 
                 if (!m_FiltersRegistered)
                 {
@@ -184,11 +202,15 @@ namespace ProspectorJourney.Room
 
         private void OnDisable()
         {
+            if (m_IsSecondaryHandSnapped)
+            {
+                ReleaseSecondaryHand();
+            }
+
             if (m_GrabInteractable != null)
             {
-                m_GrabInteractable.hoverEntered.RemoveListener(OnHoverEntered);
-                m_GrabInteractable.firstSelectEntered.RemoveListener(OnGrabbed);
-                m_GrabInteractable.lastSelectExited.RemoveListener(OnDropped);
+                m_GrabInteractable.selectEntered.RemoveListener(OnSelectEntered);
+                m_GrabInteractable.selectExited.RemoveListener(OnSelectExited);
 
                 if (m_FiltersRegistered)
                 {
@@ -201,11 +223,53 @@ namespace ProspectorJourney.Room
 
         public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
         {
-            if (m_DirectGrabOnly && interactor is NearFarInteractor nearFar)
+            // Only filter far grab when attempting to initiate a new grab (prevent laser beam grab from distance)
+            if (m_DirectGrabOnly && m_GrabInteractable != null && !m_GrabInteractable.interactorsSelecting.Contains(interactor) && interactor is NearFarInteractor nearFar)
             {
                 if (nearFar.selectionRegion.Value == NearFarInteractor.Region.Far)
                     return false;
             }
+
+            // Proximity & hand-aware attach routing on initial grab
+            if (m_AttachPrimary != null && m_AttachSecondary != null && m_GrabInteractable != null)
+            {
+                if (m_GrabInteractable.interactorsSelecting.Count == 0)
+                {
+                    bool isPan = gameObject.name.ToLowerInvariant().Contains("pan");
+                    if (isPan)
+                    {
+                        bool isLeft = IsLeftHand(interactor);
+                        if (isLeft)
+                        {
+                            m_GrabInteractable.attachTransform = m_AttachSecondary;
+                            m_GrabInteractable.secondaryAttachTransform = m_AttachPrimary;
+                        }
+                        else
+                        {
+                            m_GrabInteractable.attachTransform = m_AttachPrimary;
+                            m_GrabInteractable.secondaryAttachTransform = m_AttachSecondary;
+                        }
+                    }
+                    else
+                    {
+                        Vector3 interactorPos = interactor.transform.position;
+                        float distPrimary = Vector3.Distance(interactorPos, m_AttachPrimary.position);
+                        float distSecondary = Vector3.Distance(interactorPos, m_AttachSecondary.position);
+
+                        if (distSecondary < distPrimary && distSecondary < 0.20f)
+                        {
+                            m_GrabInteractable.attachTransform = m_AttachSecondary;
+                            m_GrabInteractable.secondaryAttachTransform = m_AttachPrimary;
+                        }
+                        else
+                        {
+                            m_GrabInteractable.attachTransform = m_AttachPrimary;
+                            m_GrabInteractable.secondaryAttachTransform = m_AttachSecondary;
+                        }
+                    }
+                }
+            }
+
             return true;
         }
 
@@ -219,30 +283,15 @@ namespace ProspectorJourney.Room
             return true;
         }
 
-        private void OnHoverEntered(HoverEnterEventArgs args)
-        {
-            // If this interactable has two attach points (mid & bottom)
-            if (m_AttachPrimary != null && m_AttachSecondary != null)
-            {
-                // Only dynamically route if not already held
-                if (m_GrabInteractable.interactorsSelecting.Count == 0)
-                {
-                    bool isLeft = IsLeftHand(args.interactorObject);
-                    if (isLeft)
-                    {
-                        // Left hand approaching first: Left gets bottom, Right will get mid
-                        m_GrabInteractable.attachTransform = m_AttachSecondary;
-                        m_GrabInteractable.secondaryAttachTransform = m_AttachPrimary;
-                    }
-                    else
-                    {
-                        // Right hand approaching first: Right gets mid, Left will get bottom
-                        m_GrabInteractable.attachTransform = m_AttachPrimary;
-                        m_GrabInteractable.secondaryAttachTransform = m_AttachSecondary;
-                    }
-                }
-            }
-        }
+        private IXRInteractor m_PrimaryInteractor;
+        private Animator m_PrimaryAnimator;
+
+        private IXRInteractor m_SecondaryInteractor;
+        private Transform m_SecondaryHandModel;
+        private Vector3 m_SavedSecondaryLocalPos;
+        private Quaternion m_SavedSecondaryLocalRot;
+        private bool m_IsSecondaryHandSnapped = false;
+        private Animator m_SecondaryAnimator;
 
         private bool IsLeftHand(IXRInteractor interactor)
         {
@@ -253,31 +302,213 @@ namespace ProspectorJourney.Room
                    pn.IndexOf("Left", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private void OnGrabbed(SelectEnterEventArgs args)
+        private void OnSelectEntered(SelectEnterEventArgs args)
         {
             if (m_Rigidbody != null)
             {
                 m_Rigidbody.constraints = RigidbodyConstraints.None;
-                // Do NOT force isKinematic = false or useGravity = true while held!
-                // XRI keeps it kinematic during grab so it tracks smoothly with zero physics glitching.
+            }
+
+            if (m_GrabInteractable != null)
+            {
+                if (m_GrabInteractable.interactorsSelecting.Count == 1)
+                {
+                    m_PrimaryInteractor = args.interactorObject;
+                    Transform controller = m_PrimaryInteractor.transform.parent != null ? m_PrimaryInteractor.transform.parent : m_PrimaryInteractor.transform;
+                    m_PrimaryAnimator = controller.GetComponentInChildren<Animator>();
+                }
+                else if (m_GrabInteractable.interactorsSelecting.Count > 1)
+                {
+                    SnapSecondaryHand(args.interactorObject);
+                }
             }
         }
 
-        private void OnDropped(SelectExitEventArgs args)
+        private void OnSelectExited(SelectExitEventArgs args)
         {
-            if (m_Rigidbody != null)
+            if (args.interactorObject == m_SecondaryInteractor)
             {
+                ReleaseSecondaryHand();
+            }
+
+            if (args.interactorObject == m_PrimaryInteractor)
+            {
+                if (m_PrimaryAnimator != null)
+                {
+                    m_PrimaryAnimator.SetFloat("Grip", 0f);
+                }
+                m_PrimaryAnimator = null;
+                m_PrimaryInteractor = null;
+
+                // If secondary interactor is still selecting, promote it to primary
+                if (m_GrabInteractable != null && m_GrabInteractable.interactorsSelecting.Count > 0)
+                {
+                    m_PrimaryInteractor = m_GrabInteractable.interactorsSelecting[0];
+                    Transform controller = m_PrimaryInteractor.transform.parent != null ? m_PrimaryInteractor.transform.parent : m_PrimaryInteractor.transform;
+                    m_PrimaryAnimator = controller.GetComponentInChildren<Animator>();
+                    if (m_PrimaryAnimator != null) m_PrimaryAnimator.SetFloat("Grip", 1.0f);
+                    ReleaseSecondaryHand();
+                }
+            }
+
+            if (m_Rigidbody != null && (m_GrabInteractable == null || m_GrabInteractable.interactorsSelecting.Count == 0))
+            {
+                ReleaseSecondaryHand();
+                if (m_PrimaryAnimator != null) m_PrimaryAnimator.SetFloat("Grip", 0f);
+                m_PrimaryAnimator = null;
+                m_PrimaryInteractor = null;
                 m_Rigidbody.constraints = RigidbodyConstraints.None;
                 m_Rigidbody.isKinematic = false;
                 m_Rigidbody.useGravity = true;
+
+                if (m_AttachPrimary != null && m_AttachSecondary != null)
+                {
+                    m_GrabInteractable.attachTransform = m_AttachPrimary;
+                    m_GrabInteractable.secondaryAttachTransform = m_AttachSecondary;
+                }
+            }
+        }
+
+        private int m_TwoHandedFrames = 0;
+
+        private void SnapSecondaryHand(IXRInteractor secInteractor)
+        {
+            if (secInteractor == null) return;
+            m_SecondaryInteractor = secInteractor;
+            m_TwoHandedFrames = 0;
+
+            bool secIsLeft = IsLeftHand(secInteractor);
+            Transform controller = secInteractor.transform.parent != null ? secInteractor.transform.parent : secInteractor.transform;
+
+            m_SecondaryHandModel = controller.Find(secIsLeft ? "Left Hand Model" : "Right Hand Model");
+            if (m_SecondaryHandModel == null)
+            {
+                var animOnCtrl = controller.GetComponentInChildren<Animator>();
+                if (animOnCtrl != null) m_SecondaryHandModel = animOnCtrl.transform;
             }
 
-            // Restore default attach transforms
-            if (m_AttachPrimary != null && m_AttachSecondary != null)
+            if (m_SecondaryHandModel != null)
             {
-                m_GrabInteractable.attachTransform = m_AttachPrimary;
-                m_GrabInteractable.secondaryAttachTransform = m_AttachSecondary;
+                m_SavedSecondaryLocalPos = m_SecondaryHandModel.localPosition;
+                m_SavedSecondaryLocalRot = m_SecondaryHandModel.localRotation;
+                m_SecondaryAnimator = m_SecondaryHandModel.GetComponent<Animator>();
             }
+
+            if (m_SecondaryAnimator == null)
+            {
+                m_SecondaryAnimator = controller.GetComponentInChildren<Animator>();
+            }
+
+            if (m_SecondaryAnimator != null)
+            {
+                m_SecondaryAnimator.SetFloat("Grip", 1.0f);
+            }
+
+            m_IsSecondaryHandSnapped = true;
+            Application.onBeforeRender += OnBeforeRenderCallback;
+        }
+
+        private void ReleaseSecondaryHand()
+        {
+            Application.onBeforeRender -= OnBeforeRenderCallback;
+
+            if (m_SecondaryHandModel != null)
+            {
+                m_SecondaryHandModel.localPosition = m_SavedSecondaryLocalPos;
+                m_SecondaryHandModel.localRotation = m_SavedSecondaryLocalRot;
+            }
+
+            if (m_SecondaryAnimator != null)
+            {
+                m_SecondaryAnimator.SetFloat("Grip", 0f);
+            }
+
+            m_IsSecondaryHandSnapped = false;
+            m_SecondaryHandModel = null;
+            m_SecondaryAnimator = null;
+            m_SecondaryInteractor = null;
+            m_TwoHandedFrames = 0;
+        }
+
+        private void OnBeforeRenderCallback()
+        {
+            ApplySecondaryHandTransform();
+        }
+
+        private void ApplySecondaryHandTransform()
+        {
+            if (!m_IsSecondaryHandSnapped || m_SecondaryHandModel == null || m_GrabInteractable == null || m_GrabInteractable.interactorsSelecting.Count <= 1)
+                return;
+
+            Transform targetSecAttach = (m_GrabInteractable.attachTransform == m_AttachPrimary) ? m_AttachSecondary : m_AttachPrimary;
+            if (targetSecAttach == null) targetSecAttach = m_AttachSecondary ?? transform;
+
+            bool secIsLeft = IsLeftHand(m_SecondaryInteractor);
+            m_SecondaryHandModel.position = targetSecAttach.position;
+            m_SecondaryHandModel.rotation = targetSecAttach.rotation * Quaternion.Euler(0f, 0f, secIsLeft ? 90f : 270f);
+        }
+
+        private void LateUpdate()
+        {
+            if (m_GrabInteractable == null) return;
+
+            if (m_GrabInteractable.interactorsSelecting.Count > 0)
+            {
+                if (m_PrimaryAnimator != null)
+                {
+                    m_PrimaryAnimator.SetFloat("Grip", 1.0f);
+                }
+            }
+
+            if (m_GrabInteractable.interactorsSelecting.Count > 1)
+            {
+                if (!m_IsSecondaryHandSnapped)
+                {
+                    SnapSecondaryHand(m_GrabInteractable.interactorsSelecting[1]);
+                }
+                UpdateSecondaryHandPose();
+            }
+            else if (m_IsSecondaryHandSnapped)
+            {
+                ReleaseSecondaryHand();
+            }
+        }
+
+        private void UpdateSecondaryHandPose()
+        {
+            if (!m_IsSecondaryHandSnapped || m_SecondaryInteractor == null) return;
+
+            m_TwoHandedFrames++;
+
+            if (m_SecondaryAnimator != null)
+            {
+                m_SecondaryAnimator.SetFloat("Grip", 1.0f);
+            }
+
+            ApplySecondaryHandTransform();
+
+            // Optional breakaway: only trigger if physical controller is pulled excessively far from the tool handle (> 0.75m)
+            if (m_SecondaryBreakDistance > 0f)
+            {
+                Transform targetSecAttach = (m_GrabInteractable.attachTransform == m_AttachPrimary) ? m_AttachSecondary : m_AttachPrimary;
+                if (targetSecAttach == null) targetSecAttach = m_AttachSecondary ?? transform;
+
+                float controllerDist = Vector3.Distance(m_SecondaryInteractor.transform.position, targetSecAttach.position);
+                float maxAllowed = Mathf.Max(m_SecondaryBreakDistance, 0.75f);
+                if (m_TwoHandedFrames > 15 && controllerDist > maxAllowed)
+                {
+                    if (m_GrabInteractable.interactionManager != null && m_SecondaryInteractor is IXRSelectInteractor secSelect)
+                    {
+                        m_GrabInteractable.interactionManager.SelectExit(secSelect, m_GrabInteractable);
+                    }
+                    ReleaseSecondaryHand();
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            ReleaseSecondaryHand();
         }
     }
 }

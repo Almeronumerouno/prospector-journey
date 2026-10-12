@@ -7,13 +7,15 @@ namespace ProspectorJourney.UI
     [RequireComponent(typeof(Selectable))]
     public class VRButtonAudioFeedback : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
-        private MainMenuVRController controller;
+        private MainMenuVRController mainMenuController;
+        private ProspectorJourney.Room.ProspectorInventory inventoryController;
         private RectTransform rectTransform;
         private Vector3 originalScale;
 
         private void Awake()
         {
-            controller = GetComponentInParent<MainMenuVRController>();
+            mainMenuController = GetComponentInParent<MainMenuVRController>();
+            inventoryController = GetComponentInParent<ProspectorJourney.Room.ProspectorInventory>();
             rectTransform = GetComponent<RectTransform>();
             if (rectTransform != null)
             {
@@ -27,7 +29,8 @@ namespace ProspectorJourney.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             // Jangan bunyikan hover sound kalau canvas menu lagi melayang/nengok (catching-up)
-            if (controller != null && controller.IsMenuMoving)
+            if ((mainMenuController != null && mainMenuController.IsMenuMoving) ||
+                (inventoryController != null && inventoryController.IsMenuMoving))
             {
                 return;
             }
@@ -40,17 +43,25 @@ namespace ProspectorJourney.UI
 
             s_LastHoverTime = Time.unscaledTime;
 
-            if (controller != null)
+            if (mainMenuController != null)
             {
-                controller.PlayHoverSound();
+                mainMenuController.PlayHoverSound();
+            }
+            else if (inventoryController != null)
+            {
+                inventoryController.PlayHoverSound();
             }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (controller != null)
+            if (mainMenuController != null)
             {
-                controller.PlayClickSound();
+                mainMenuController.PlayClickSound();
+            }
+            else if (inventoryController != null)
+            {
+                inventoryController.PlayClickSound();
             }
         }
     }
