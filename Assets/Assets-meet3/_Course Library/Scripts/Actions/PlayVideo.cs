@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -32,6 +32,14 @@ public class PlayVideo : MonoBehaviour
 
         if (videoClips.Count > 0)
             videoPlayer.clip = videoClips[0];
+
+        if (TryGetComponent(out AudioSource audioSource))
+        {
+            videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+            videoPlayer.controlledAudioTrackCount = 1;
+            videoPlayer.EnableAudioTrack(0, true);
+            videoPlayer.SetTargetAudioSource(0, audioSource);
+        }
 
         offMaterial = meshRenderer.material;
     }
@@ -98,6 +106,10 @@ public class PlayVideo : MonoBehaviour
     {
         meshRenderer.material = offMaterial;
         videoPlayer.Stop();
+        if (videoPlayer.clip != null)
+        {
+            videoPlayer.Prepare();
+        }
     }
 
     public void TogglePlayStop()
@@ -108,12 +120,20 @@ public class PlayVideo : MonoBehaviour
 
     public void TogglePlayPause()
     {
-        meshRenderer.material = videoMaterial;
-
         if (videoPlayer.isPlaying)
+        {
             videoPlayer.Pause();
+            meshRenderer.material = offMaterial;
+        }
         else
+        {
+            meshRenderer.material = videoMaterial;
+            if (videoMaterial != null)
+                videoMaterial.color = Color.white;
             videoPlayer.Play();
+            if (videoPlayer.texture != null)
+                meshRenderer.material.SetTexture("_BaseMap", videoPlayer.texture);
+        }
     }
 
     public void SetPlay(bool value)
@@ -130,8 +150,15 @@ public class PlayVideo : MonoBehaviour
 
     private void ApplyVideoMaterial(VideoPlayer source)
     {
-        meshRenderer.material = videoMaterial;
-        videoMaterial.color = Color.white; // allows video to be displayed - black material hides video
+        if (videoMaterial != null)
+            videoMaterial.color = Color.white; // allows video to be displayed - black material hides video
+
+        if (source != null && source.isPlaying)
+        {
+            meshRenderer.material = videoMaterial;
+            if (source.texture != null)
+                meshRenderer.material.SetTexture("_BaseMap", source.texture);
+        }
     }
 
     private void OnValidate()

@@ -192,15 +192,31 @@ namespace ProspectorJourney.Room
         private bool m_PrevRightPrimary = false;
         private Coroutine m_ToastCoroutine;
 
+        private DoorSceneTransition m_CachedDoor;
+
+        private bool IsPlayerNearDoor()
+        {
+            if (m_CachedDoor == null)
+                m_CachedDoor = FindFirstObjectByType<DoorSceneTransition>();
+            return m_CachedDoor != null && m_CachedDoor.IsPlayerNearby;
+        }
+
+        public void PlayErrorSound()
+        {
+            PlaySound(errorClip);
+        }
+
         private void CheckVRInput()
         {
+            bool nearDoor = IsPlayerNearDoor();
+
             // Left Controller (X = Primary, Y = Secondary)
             var leftDevice = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand);
             if (leftDevice.isValid)
             {
                 if (leftDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool leftPri))
                 {
-                    if (leftPri && !m_PrevLeftPrimary) QuickStoreHeldItem(leftNearFar);
+                    if (leftPri && !m_PrevLeftPrimary && !nearDoor) QuickStoreHeldItem(leftNearFar);
                     m_PrevLeftPrimary = leftPri;
                 }
 
@@ -221,7 +237,7 @@ namespace ProspectorJourney.Room
             {
                 if (rightDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool rightPri))
                 {
-                    if (rightPri && !m_PrevRightPrimary) QuickStoreHeldItem(rightNearFar);
+                    if (rightPri && !m_PrevRightPrimary && !nearDoor) QuickStoreHeldItem(rightNearFar);
                     m_PrevRightPrimary = rightPri;
                 }
 
@@ -602,6 +618,44 @@ namespace ProspectorJourney.Room
             {
                 if (!m_Slots[i].isOccupied) return true;
             }
+            return false;
+        }
+
+        public bool HasItemInBagOrHand(string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword)) return false;
+
+            if (m_Slots != null)
+            {
+                for (int i = 0; i < m_Slots.Length; i++)
+                {
+                    if (m_Slots[i] != null && m_Slots[i].isOccupied && !string.IsNullOrEmpty(m_Slots[i].itemName))
+                    {
+                        if (m_Slots[i].itemName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                            return true;
+                    }
+                }
+            }
+
+            FindInteractors();
+            if (rightNearFar != null && rightNearFar.hasSelection)
+            {
+                foreach (var sel in rightNearFar.interactablesSelected)
+                {
+                    if (sel is Component comp && comp.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+            }
+
+            if (leftNearFar != null && leftNearFar.hasSelection)
+            {
+                foreach (var sel in leftNearFar.interactablesSelected)
+                {
+                    if (sel is Component comp && comp.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return true;
+                }
+            }
+
             return false;
         }
 

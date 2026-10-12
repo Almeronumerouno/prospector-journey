@@ -119,8 +119,39 @@ namespace ProspectorJourney.Room
             if (m_IsPlayerNearby)
             {
                 FacePromptToPlayer();
+                UpdatePromptLabel();
                 CheckInteractionInput();
             }
+        }
+
+        public bool HasRequiredToolsForExit(out bool hasShovel, out bool hasPan)
+        {
+            hasShovel = false;
+            hasPan = false;
+
+            if (ProspectorInventory.Instance != null)
+            {
+                hasShovel = ProspectorInventory.Instance.HasItemInBagOrHand("shovel");
+                hasPan = ProspectorInventory.Instance.HasItemInBagOrHand("Gold_Pan");
+            }
+
+            if (!hasShovel || !hasPan)
+            {
+                var grabs = FindObjectsByType<XRGrabInteractable>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+                foreach (var grab in grabs)
+                {
+                    if (grab != null && grab.isSelected)
+                    {
+                        string n = grab.gameObject.name;
+                        if (n.IndexOf("shovel", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                            hasShovel = true;
+                        if (n.IndexOf("Gold_Pan", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                            hasPan = true;
+                    }
+                }
+            }
+
+            return hasShovel && hasPan;
         }
 
         private void FacePromptToPlayer()
@@ -141,6 +172,7 @@ namespace ProspectorJourney.Room
             if (promptPanel != null)
             {
                 promptPanel.SetActive(isNearby);
+                if (isNearby) UpdatePromptLabel();
                 if (promptCanvasGroup != null)
                 {
                     StopAllCoroutines();
@@ -219,6 +251,28 @@ namespace ProspectorJourney.Room
         public void OnDoorInteracted()
         {
             if (m_IsTransitioning) return;
+
+            if (!HasRequiredToolsForExit(out bool hasShovel, out bool hasPan))
+            {
+                UpdatePromptLabel();
+                string missingMsg;
+                if (!hasShovel && !hasPan)
+                    missingMsg = "Belum bisa keluar! Bawa Sekop & Gold Pan dulu.";
+                else if (!hasShovel)
+                    missingMsg = "Belum bisa keluar! Bawa Sekop (Shovel) dulu.";
+                else
+                    missingMsg = "Belum bisa keluar! Bawa Gold Pan dulu.";
+
+                if (ProspectorInventory.Instance != null)
+                {
+                    ProspectorInventory.Instance.PlayErrorSound();
+                    ProspectorInventory.Instance.ShowToast(missingMsg);
+                }
+
+                Debug.Log($"[DoorSceneTransition] Exit ditolak: hasShovel={hasShovel}, hasPan={hasPan}");
+                return;
+            }
+
             if (string.IsNullOrEmpty(targetSceneName))
             {
                 Debug.LogWarning("[DoorSceneTransition] Target scene name belum diset!");
@@ -318,9 +372,17 @@ namespace ProspectorJourney.Room
 
         public void UpdatePromptLabel()
         {
-            if (promptText != null)
+            if (promptText == null) return;
+
+            if (HasRequiredToolsForExit(out bool hasShovel, out bool hasPan))
             {
-                promptText.text = "<b><size=28>[E]</size> <color=#FFFFFF>Keluar Rumah</color></b>\n<size=18><color=#E6C66E>(VR: Tekan [A] / Trigger)</color></size>";
+                promptText.text = "<b><size=26>[E]</size> <color=#FFFFFF>Keluar Rumah</color></b>\n<size=17><color=#7CFC00>[OK] Sekop & Gold Pan Siap (VR: [A] / Trigger)</color></size>";
+            }
+            else
+            {
+                string shovelStr = hasShovel ? "<color=#7CFC00>[OK] Sekop</color>" : "<color=#FF6B6B>[X] Sekop</color>";
+                string panStr = hasPan ? "<color=#7CFC00>[OK] Gold Pan</color>" : "<color=#FF6B6B>[X] Gold Pan</color>";
+                promptText.text = $"<b><size=24><color=#FF6B6B>Belum Bisa Keluar!</color></size></b>\n<size=17>Wajib Bawa: {shovelStr}  {panStr}</size>";
             }
         }
 

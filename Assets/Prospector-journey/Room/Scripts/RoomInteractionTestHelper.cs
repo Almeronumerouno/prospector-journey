@@ -28,6 +28,7 @@ namespace ProspectorJourney.Room
 
         private void Awake()
         {
+            Application.runInBackground = true;
             if (interactionManager == null)
                 interactionManager = FindFirstObjectByType<XRInteractionManager>();
 
@@ -92,10 +93,47 @@ namespace ProspectorJourney.Room
             if (kb.digit6Key.wasPressedThisFrame) GrabProp("Gold_Pouch");
             if (kb.digit7Key.wasPressedThisFrame) GrabProp("tool-hammer");
             if (kb.digit8Key.wasPressedThisFrame) GrabProp("tool-axe");
+            if (kb.digit9Key.wasPressedThisFrame) GrabProp("Remote");
             if (kb.uKey.wasPressedThisFrame) GrabTwoHanded("tool-pickaxe");
             if (kb.iKey.wasPressedThisFrame) GrabTwoHanded("tool-shovel");
             if (kb.oKey.wasPressedThisFrame) GrabTwoHanded("tool-axe");
             if (kb.digit0Key.wasPressedThisFrame) DropCurrent();
+
+            XRGrabInteractable activeGrab = m_CurrentlyGrabbed;
+            IXRActivateInteractor activeInteractor = (testRightHand ? rightNearFar : leftNearFar) as IXRActivateInteractor;
+            if (activeGrab == null)
+            {
+                if (rightNearFar != null && rightNearFar.interactablesSelected.Count > 0)
+                {
+                    activeGrab = rightNearFar.interactablesSelected[0] as XRGrabInteractable;
+                    activeInteractor = rightNearFar;
+                }
+                else if (leftNearFar != null && leftNearFar.interactablesSelected.Count > 0)
+                {
+                    activeGrab = leftNearFar.interactablesSelected[0] as XRGrabInteractable;
+                    activeInteractor = leftNearFar;
+                }
+            }
+
+            if (activeGrab != null)
+            {
+                if (kb.tKey.wasPressedThisFrame)
+                {
+                    activeGrab.activated?.Invoke(new ActivateEventArgs
+                    {
+                        interactorObject = activeInteractor,
+                        interactableObject = activeGrab
+                    });
+                }
+                if (kb.tKey.wasReleasedThisFrame)
+                {
+                    activeGrab.deactivated?.Invoke(new DeactivateEventArgs
+                    {
+                        interactorObject = activeInteractor,
+                        interactableObject = activeGrab
+                    });
+                }
+            }
 
             // Interactive test controls for two-handed manipulation
             if (m_CurrentlyGrabbed != null && m_CurrentlyGrabbed.interactorsSelecting.Count > 1)
