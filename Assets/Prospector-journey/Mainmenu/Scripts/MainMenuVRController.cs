@@ -27,10 +27,35 @@ namespace ProspectorJourney.UI
         [SerializeField] private AudioClip bgmClip;
         [SerializeField] [Range(0f, 1f)] private float bgmVolume = 0.45f;
 
-        [Header("Settings Controls")]
+        [Header("Settings Controls (Legacy)")]
         [SerializeField] private Toggle snapTurnToggle;
         [SerializeField] private Toggle vignetteToggle;
         [SerializeField] private Slider volumeSlider;
+
+        [Header("Game Options UI (Turn & Locomotion)")]
+        [SerializeField] private TextMeshProUGUI turnTypeText;
+        [SerializeField] private TextMeshProUGUI locomotionTypeText;
+        [SerializeField] private Button turnPrevButton;
+        [SerializeField] private Button turnNextButton;
+        [SerializeField] private Button locomotionPrevButton;
+        [SerializeField] private Button locomotionNextButton;
+        [SerializeField] private Button saveAndExitButton;
+
+        [Header("Main Menu Navigation Buttons (Auto-Bound)")]
+        [SerializeField] private Button btnStartExpedition;
+        [SerializeField] private Button btnTutorial;
+        [SerializeField] private Button btnSettings;
+        [SerializeField] private Button btnCredits;
+        [SerializeField] private Button btnQuit;
+        [SerializeField] private Button btnLaunchTutorialScene;
+        [SerializeField] private Button btnBackFromTutorial;
+        [SerializeField] private Button btnBackFromCredits;
+
+        public enum TurnTypeOption { Snap = 0, Continuous = 1 }
+        public enum LocomotionTypeOption { Teleport = 0, Continuous = 1 }
+
+        private TurnTypeOption currentTurnType = TurnTypeOption.Snap;
+        private LocomotionTypeOption currentLocomotionType = LocomotionTypeOption.Teleport;
 
         [Header("VR Lazy Follow Settings")]
         [Tooltip("Enable smooth VR follow that stays at eye height and respects horizontal gaze.")]
@@ -105,6 +130,14 @@ namespace ProspectorJourney.UI
                 if (cam != null) targetCamera = cam.transform;
             }
 
+            var canvas = GetComponent<Canvas>();
+            if (canvas != null && canvas.worldCamera == null && targetCamera != null)
+            {
+                canvas.worldCamera = targetCamera.GetComponent<Camera>();
+            }
+
+            BindButtonsRuntime();
+            UpdateOptionsUI();
             SnapToFront();
         }
 
@@ -133,8 +166,7 @@ namespace ProspectorJourney.UI
         public void OnClickStartExpedition()
         {
             PlayClickSound();
-            Debug.Log($"[Prospector Journey] Loading game scene: {mainGameScene}");
-            SceneManager.LoadSceneAsync(mainGameScene);
+            Debug.Log("[Prospector Journey] Start Expedition is COMING SOON!");
         }
 
         public void OnClickTutorial()
@@ -153,6 +185,8 @@ namespace ProspectorJourney.UI
         public void OnClickSettings()
         {
             PlayClickSound();
+            LoadSettings();
+            UpdateOptionsUI();
             ShowPanel(settingsPanel);
         }
 
@@ -178,10 +212,83 @@ namespace ProspectorJourney.UI
 #endif
         }
 
+        #region Game Options Controls (Turn Type & Locomotion Type)
+        public void OnTurnTypePrev()
+        {
+            CycleTurnType(-1);
+        }
+
+        public void OnTurnTypeNext()
+        {
+            CycleTurnType(1);
+        }
+
+        public void OnLocomotionTypePrev()
+        {
+            CycleLocomotionType(-1);
+        }
+
+        public void OnLocomotionTypeNext()
+        {
+            CycleLocomotionType(1);
+        }
+
+        private void CycleTurnType(int dir)
+        {
+            int total = 2; // Snap (0), Continuous (1)
+            int val = (int)currentTurnType + dir;
+            if (val < 0) val = total - 1;
+            else if (val >= total) val = 0;
+            currentTurnType = (TurnTypeOption)val;
+            UpdateOptionsUI();
+            PlayClickSound();
+        }
+
+        private void CycleLocomotionType(int dir)
+        {
+            int total = 2; // Teleport (0), Continuous (1)
+            int val = (int)currentLocomotionType + dir;
+            if (val < 0) val = total - 1;
+            else if (val >= total) val = 0;
+            currentLocomotionType = (LocomotionTypeOption)val;
+            UpdateOptionsUI();
+            PlayClickSound();
+        }
+
+        public void OnSaveAndExitSettings()
+        {
+            PlayerPrefs.SetInt("VR_TurnType", (int)currentTurnType);
+            PlayerPrefs.SetInt("VR_LocomotionType", (int)currentLocomotionType);
+            PlayerPrefs.SetInt("VR_SnapTurn", currentTurnType == TurnTypeOption.Snap ? 1 : 0);
+            PlayerPrefs.Save();
+
+            PlayClickSound();
+            Debug.Log($"[Prospector Journey] Saved Game Options: Turn={currentTurnType}, Locomotion={currentLocomotionType}");
+            ShowPanel(mainPanel);
+        }
+
+        private void UpdateOptionsUI()
+        {
+            if (turnTypeText != null)
+            {
+                turnTypeText.text = currentTurnType == TurnTypeOption.Snap ? "SNAP" : "CONTINUOUS";
+            }
+
+            if (locomotionTypeText != null)
+            {
+                locomotionTypeText.text = currentLocomotionType == LocomotionTypeOption.Teleport ? "TELEPORT" : "CONTINUOUS";
+            }
+        }
+        #endregion
+
+        #region Legacy Settings Toggles
         public void OnToggleSnapTurn(bool isSnap)
         {
+            currentTurnType = isSnap ? TurnTypeOption.Snap : TurnTypeOption.Continuous;
             PlayerPrefs.SetInt("VR_SnapTurn", isSnap ? 1 : 0);
+            PlayerPrefs.SetInt("VR_TurnType", (int)currentTurnType);
             PlayerPrefs.Save();
+            UpdateOptionsUI();
             PlayClickSound();
         }
 
@@ -197,12 +304,17 @@ namespace ProspectorJourney.UI
             AudioListener.volume = volume;
             PlayerPrefs.SetFloat("Audio_Volume", volume);
         }
+        #endregion
 
         private void LoadSettings()
         {
+            // Game Options
+            currentTurnType = (TurnTypeOption)PlayerPrefs.GetInt("VR_TurnType", PlayerPrefs.GetInt("VR_SnapTurn", 1) == 1 ? 0 : 1);
+            currentLocomotionType = (LocomotionTypeOption)PlayerPrefs.GetInt("VR_LocomotionType", 0);
+
             if (snapTurnToggle != null)
             {
-                snapTurnToggle.isOn = PlayerPrefs.GetInt("VR_SnapTurn", 1) == 1;
+                snapTurnToggle.isOn = currentTurnType == TurnTypeOption.Snap;
             }
 
             if (vignetteToggle != null)
@@ -216,6 +328,91 @@ namespace ProspectorJourney.UI
                 volumeSlider.value = vol;
                 AudioListener.volume = vol;
             }
+
+            UpdateOptionsUI();
+        }
+
+        private void BindButtonsRuntime()
+        {
+            // Auto-locate navigation buttons if unassigned
+            if (mainPanel != null)
+            {
+                if (btnStartExpedition == null) btnStartExpedition = FindButtonByName(mainPanel.transform, "Btn_StartExpedition");
+                if (btnTutorial == null) btnTutorial = FindButtonByName(mainPanel.transform, "Btn_Tutorial");
+                if (btnSettings == null) btnSettings = FindButtonByName(mainPanel.transform, "Btn_Settings");
+                if (btnCredits == null) btnCredits = FindButtonByName(mainPanel.transform, "Btn_Credits");
+                if (btnQuit == null) btnQuit = FindButtonByName(mainPanel.transform, "Btn_Quit");
+            }
+
+            if (tutorialPanel != null)
+            {
+                if (btnLaunchTutorialScene == null) btnLaunchTutorialScene = FindButtonByName(tutorialPanel.transform, "Btn_LaunchTutorialScene");
+                if (btnBackFromTutorial == null) btnBackFromTutorial = FindButtonByName(tutorialPanel.transform, "Btn_BackFromTutorial");
+            }
+
+            if (creditsPanel != null)
+            {
+                if (btnBackFromCredits == null) btnBackFromCredits = FindButtonByName(creditsPanel.transform, "Btn_BackFromCredits");
+            }
+
+            if (settingsPanel != null)
+            {
+                if (turnPrevButton == null) turnPrevButton = FindButtonByName(settingsPanel.transform, "Btn_TurnPrev");
+                if (turnNextButton == null) turnNextButton = FindButtonByName(settingsPanel.transform, "Btn_TurnNext");
+                if (locomotionPrevButton == null) locomotionPrevButton = FindButtonByName(settingsPanel.transform, "Btn_LocoPrev");
+                if (locomotionNextButton == null) locomotionNextButton = FindButtonByName(settingsPanel.transform, "Btn_LocoNext");
+                if (saveAndExitButton == null) saveAndExitButton = FindButtonByName(settingsPanel.transform, "Btn_SaveAndExit");
+                if (saveAndExitButton == null) saveAndExitButton = FindButtonByName(settingsPanel.transform, "Btn_BackFromSettings");
+
+                if (turnTypeText == null) turnTypeText = FindTextByName(settingsPanel.transform, "Text_TurnValue");
+                if (locomotionTypeText == null) locomotionTypeText = FindTextByName(settingsPanel.transform, "Text_LocoValue");
+            }
+
+            // Hook up listeners reliably
+            BindClick(btnStartExpedition, OnClickStartExpedition);
+            BindClick(btnTutorial, OnClickTutorial);
+            BindClick(btnSettings, OnClickSettings);
+            BindClick(btnCredits, OnClickCredits);
+            BindClick(btnQuit, OnClickQuit);
+
+            BindClick(btnLaunchTutorialScene, OnClickLaunchTutorialScene);
+            BindClick(btnBackFromTutorial, OnClickBack);
+            BindClick(btnBackFromCredits, OnClickBack);
+
+            BindClick(turnPrevButton, OnTurnTypePrev);
+            BindClick(turnNextButton, OnTurnTypeNext);
+            BindClick(locomotionPrevButton, OnLocomotionTypePrev);
+            BindClick(locomotionNextButton, OnLocomotionTypeNext);
+            BindClick(saveAndExitButton, OnSaveAndExitSettings);
+        }
+
+        private static Button FindButtonByName(Transform root, string buttonName)
+        {
+            if (root == null) return null;
+            var buttons = root.GetComponentsInChildren<Button>(true);
+            foreach (var b in buttons)
+            {
+                if (b.gameObject.name == buttonName) return b;
+            }
+            return null;
+        }
+
+        private static TextMeshProUGUI FindTextByName(Transform root, string textName)
+        {
+            if (root == null) return null;
+            var texts = root.GetComponentsInChildren<TextMeshProUGUI>(true);
+            foreach (var t in texts)
+            {
+                if (t.gameObject.name == textName) return t;
+            }
+            return null;
+        }
+
+        private static void BindClick(Button btn, UnityEngine.Events.UnityAction action)
+        {
+            if (btn == null || action == null) return;
+            btn.onClick.RemoveListener(action);
+            btn.onClick.AddListener(action);
         }
 
         private void ShowPanel(GameObject panelToShow)

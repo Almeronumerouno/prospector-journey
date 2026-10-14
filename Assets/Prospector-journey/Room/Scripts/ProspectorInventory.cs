@@ -111,15 +111,47 @@ namespace ProspectorJourney.Room
 
             if (storedItemsContainer == null)
             {
-                var containerGo = new GameObject("[Stored_Items_Container]");
-                containerGo.transform.SetParent(transform);
-                containerGo.SetActive(false);
-                storedItemsContainer = containerGo.transform;
+                var existing = transform.Find("[Stored_Items_Container]") ?? transform.Find("Stored_Items_Container");
+                if (existing != null)
+                {
+                    storedItemsContainer = existing;
+                }
+                else
+                {
+                    var containerGo = new GameObject("[Stored_Items_Container]");
+                    containerGo.transform.SetParent(transform);
+                    containerGo.SetActive(false);
+                    storedItemsContainer = containerGo.transform;
+                }
+            }
+
+            if (toastPanel == null)
+            {
+                var tp = transform.Find("ToastNotification") ?? transform.Find("ToastPanel");
+                if (tp == null)
+                {
+                    var toastGo = GameObject.Find("ToastNotification");
+                    if (toastGo != null) tp = toastGo.transform;
+                }
+                if (tp != null)
+                {
+                    toastPanel = tp.gameObject;
+                    if (toastText == null)
+                        toastText = toastPanel.GetComponentInChildren<TextMeshProUGUI>(true);
+                }
             }
 
             m_MainCamera = Camera.main;
             InitializeSlots();
         }
+
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
+        }
+
+        public Transform StoredItemsContainer => storedItemsContainer;
+        public InventorySlotData[] Slots => m_Slots;
 
         private void Start()
         {
@@ -131,6 +163,7 @@ namespace ProspectorJourney.Room
 
             FindInteractors();
             SetupUIEvents();
+            InitializePreStoredItems();
             UpdateUI();
 
             // Start closed
@@ -139,6 +172,69 @@ namespace ProspectorJourney.Room
                 inventoryPanel.SetActive(false);
             }
             m_IsOpen = false;
+        }
+
+        public void InitializePreStoredItems()
+        {
+            if (storedItemsContainer == null)
+            {
+                var existing = transform.Find("[Stored_Items_Container]") ?? transform.Find("Stored_Items_Container");
+                if (existing != null)
+                {
+                    storedItemsContainer = existing;
+                }
+            }
+
+            if (storedItemsContainer == null || m_Slots == null) return;
+
+            int slotIdx = 0;
+            int childCount = storedItemsContainer.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Transform child = storedItemsContainer.GetChild(i);
+                if (child == null) continue;
+
+                // Check if already registered in any slot
+                bool alreadyRegistered = false;
+                for (int s = 0; s < maxSlots; s++)
+                {
+                    if (m_Slots[s] != null && m_Slots[s].isOccupied && m_Slots[s].itemGameObject == child.gameObject)
+                    {
+                        alreadyRegistered = true;
+                        break;
+                    }
+                }
+                if (alreadyRegistered) continue;
+
+                // Find next free slot
+                while (slotIdx < maxSlots && m_Slots[slotIdx].isOccupied)
+                {
+                    slotIdx++;
+                }
+                if (slotIdx >= maxSlots) break;
+
+                GameObject itemGo = child.gameObject;
+                itemGo.SetActive(false);
+
+                var grab = itemGo.GetComponent<XRGrabInteractable>() ?? itemGo.GetComponentInChildren<XRGrabInteractable>(true);
+                var rb = itemGo.GetComponent<Rigidbody>() ?? itemGo.GetComponentInChildren<Rigidbody>(true);
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.isKinematic = true;
+                }
+
+                m_Slots[slotIdx].isOccupied = true;
+                m_Slots[slotIdx].itemName = itemGo.name;
+                m_Slots[slotIdx].itemDisplayName = FormatDisplayName(itemGo.name);
+                m_Slots[slotIdx].itemGameObject = itemGo;
+                m_Slots[slotIdx].grabInteractable = grab;
+
+                slotIdx++;
+            }
+
+            UpdateUI();
         }
 
         private void InitializeSlots()
@@ -255,6 +351,11 @@ namespace ProspectorJourney.Room
 
         private void Update()
         {
+            if (ProspectorJourney.UI.PauseMenuController.IsGamePaused)
+            {
+                return;
+            }
+
             var kb = Keyboard.current;
             if (kb != null)
             {
@@ -629,9 +730,11 @@ namespace ProspectorJourney.Room
             {
                 for (int i = 0; i < m_Slots.Length; i++)
                 {
-                    if (m_Slots[i] != null && m_Slots[i].isOccupied && !string.IsNullOrEmpty(m_Slots[i].itemName))
+                    if (m_Slots[i] != null && m_Slots[i].isOccupied)
                     {
-                        if (m_Slots[i].itemName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (!string.IsNullOrEmpty(m_Slots[i].itemName) && m_Slots[i].itemName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                            return true;
+                        if (!string.IsNullOrEmpty(m_Slots[i].itemDisplayName) && m_Slots[i].itemDisplayName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
                             return true;
                     }
                 }
@@ -642,8 +745,11 @@ namespace ProspectorJourney.Room
             {
                 foreach (var sel in rightNearFar.interactablesSelected)
                 {
-                    if (sel is Component comp && comp.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
-                        return true;
+                    if (sel is Component comp)
+                    {
+                        if (comp.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                        if (comp.transform.root != null && comp.transform.root.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                    }
                 }
             }
 
@@ -651,8 +757,11 @@ namespace ProspectorJourney.Room
             {
                 foreach (var sel in leftNearFar.interactablesSelected)
                 {
-                    if (sel is Component comp && comp.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
-                        return true;
+                    if (sel is Component comp)
+                    {
+                        if (comp.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                        if (comp.transform.root != null && comp.transform.root.gameObject.name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                    }
                 }
             }
 
@@ -756,11 +865,17 @@ namespace ProspectorJourney.Room
             GameObject itemGo = slot.itemGameObject;
             XRGrabInteractable grab = slot.grabInteractable;
 
-            if (itemGo == null || grab == null)
+            if (itemGo == null)
             {
                 slot.isOccupied = false;
                 UpdateUI();
                 return false;
+            }
+
+            if (grab == null)
+            {
+                grab = itemGo.GetComponent<XRGrabInteractable>() ?? itemGo.GetComponentInChildren<XRGrabInteractable>(true);
+                slot.grabInteractable = grab;
             }
 
             // 1. Reactivate GameObject
@@ -781,11 +896,20 @@ namespace ProspectorJourney.Room
                 spawnPos = targetHand.transform.parent.position + targetHand.transform.parent.forward * 0.10f;
                 spawnRot = targetHand.transform.parent.rotation;
             }
-            else
+            else if (inventoryPanel != null)
             {
-                // Spawn right in front of inventory panel
                 spawnPos = inventoryPanel.transform.position + inventoryPanel.transform.forward * -0.25f + Vector3.up * 0.05f;
                 spawnRot = inventoryPanel.transform.rotation;
+            }
+            else if (targetCamera != null)
+            {
+                spawnPos = targetCamera.position + targetCamera.forward * 0.5f;
+                spawnRot = targetCamera.rotation;
+            }
+            else
+            {
+                spawnPos = transform.position + transform.forward * 0.5f;
+                spawnRot = transform.rotation;
             }
 
             itemGo.transform.position = spawnPos;
@@ -796,17 +920,18 @@ namespace ProspectorJourney.Room
             {
                 rb.isKinematic = false;
                 rb.useGravity = true;
+                rb.constraints = RigidbodyConstraints.None;
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
 
             // 3. Attempt to auto-grab if hand is free
-            if (targetHand != null && interactionManager != null)
+            if (grab != null && targetHand != null && interactionManager != null)
             {
                 interactionManager.SelectEnter((IXRSelectInteractor)targetHand, (IXRSelectInteractable)grab);
             }
 
-            string retrievedName = slot.itemDisplayName;
+            string retrievedName = !string.IsNullOrEmpty(slot.itemDisplayName) ? slot.itemDisplayName : FormatDisplayName(slot.itemName);
             slot.isOccupied = false;
             slot.itemGameObject = null;
             slot.grabInteractable = null;
@@ -815,6 +940,7 @@ namespace ProspectorJourney.Room
 
             PlaySound(retrieveClip);
             SetStatus($"Mengeluarkan {retrievedName} dari Tas.");
+            ShowToast($"[-] {retrievedName} keluar dari Tas");
             UpdateUI();
             return true;
         }

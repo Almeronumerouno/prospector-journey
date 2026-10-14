@@ -1,0 +1,139 @@
+================================================================================
+                   OFFICIAL UTS IF630 AUDIT REPORT (VERIFIED)                    
+================================================================================
+
+>>> AUDITING SCENE: Assets/Prospector-journey/Room/Room scene.unity
+
+--- QUESTION 1: Minimum 1 Level, EXE & APK (20%) ---
+  [Q1.1 - 5 pts] Playable Level exists: YES (+5 pts)
+  [Q1.2 - 5 pts] No compile errors in project: YES (+5 pts)
+  [Q1.3 - 5 pts] Android / Quest target supported: True (+5 pts)
+  [Q1.4 - 5 pts] XR Interaction Simulator in scene: True (+5 pts)
+  => Question 1 Subtotal: 20/20 pts
+
+--- QUESTION 2: No Errors or Bugs (15%) ---
+  [PASS] 0 missing scripts or broken references found (+15 pts)
+  => Question 2 Subtotal: 15/15 pts
+
+--- QUESTION 3: Structured 3D Models / Primitives (15%) ---
+  [Q3.1 - 5 pts] 3D Models: 99 mesh filters, 99 mesh renderers (+5 pts)
+  [Q3.2 - 5 pts] Colliders: 88 colliders active (+5 pts)
+  [Q3.3 - 5 pts] 3D Models and materials clean without errors (+5 pts)
+  => Question 3 Subtotal: 15/15 pts
+
+--- QUESTION 4: Snap/Continuous Turn, Continuous Move, Tunneling Vignette (15%) ---
+  [Q4.1 - 5 pts] Snap Turn / Continuous Turn present (+5 pts)
+  [Q4.2 - 5 pts] Continuous Move provider present (+5 pts)
+  [Q4.3 - 5 pts] Tunneling Vignette present and linked (+5 pts)
+  => Question 4 Subtotal: 15/15 pts
+
+--- QUESTION 5: Teleportation Area, Teleportation Anchor & Reticle (15%) ---
+  [Q5.1 - 5 pts] Teleportation Area count: 1 (+5 pts)
+  [Q5.2 - 5 pts] Teleportation Anchor count: 4 (+5 pts)
+  [Q5.3 - 5 pts] Reticles: Anchors with custom reticle: 4/4, LineVisuals with reticle: 2/2
+  [PASS] Reticle properly configured (+5 pts)
+  => Question 5 Subtotal: 15/15 pts
+
+--- QUESTION 6: Grab Feature, >=3 Objects, Custom Hands, Attach & Physics (20%) ---
+  [Q6.1 - 5 pts] XRGrabInteractable present: True (+5 pts)
+  [Q6.2 - 5 pts] Grabbable Objects count: 16 (+5 pts)
+  [Q6.3 - 5 pts] Animated Hand Models: 2 hands found (+5 pts)
+    - Prop: 'tool-shovel' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'bucket' | Attach: Attach_Point | Rigidbody: YES | Collider: MeshCollider
+    - Prop: 'bottle' | Attach: Attach_Point | Rigidbody: YES | Collider: CapsuleCollider
+    - Prop: 'Gold_Nugget_Large' | Attach: Attach_Point | Rigidbody: YES | Collider: SphereCollider
+    - Prop: 'Gold_Nugget_Small' | Attach: Attach_Point | Rigidbody: YES | Collider: SphereCollider
+    - Prop: 'Gold_Pouch' | Attach: Attach_Point | Rigidbody: YES | Collider: SphereCollider
+    - Prop: 'Remote' | Attach: Attach | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'tool-pickaxe' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'tool-axe' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'Gold_Nugget_Medium' | Attach: Attach_Point | Rigidbody: YES | Collider: SphereCollider
+    - Prop: 'tool-shovel-upgraded' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'Gold_Pan' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'tool-pickaxe-upgraded' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'bottle-large' | Attach: Attach_Point | Rigidbody: YES | Collider: CapsuleCollider
+    - Prop: 'tool-hammer' | Attach: Attach_Point | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'Gold_Bar' | Attach: Attach_Point | Rigidbody: YES | Collider: BoxCollider
+  [Q6.4 - 5 pts] Valid Attach + Rigidbody + Collider: 16/16 (+5 pts)
+  => Question 6 Subtotal: 20/20 pts
+
+>>> SCENE GRAND TOTAL SCORE: 100/100 pts
+
+>>> AUDITING SCENE: Assets/Prospector-journey/Tutorial/Tutorial scene.unity
+
+--- QUESTION 1: Minimum 1 Level, EXE & APK (20%) ---
+  [Q1.1 - 5 pts] Playable Level exists: YES (+5 pts)
+  [Q1.2 - 5 pts] No compile errors in project: YES (+5 pts)
+  [Q1.3 - 5 pts] Android / Quest target supported: True (+5 pts)
+  [Q1.4 - 5 pts] XR Interaction Simulator in scene: True (+5 pts)
+  => Question 1 Subtotal: 20/20 pts
+
+--- QUESTION 2: No Errors or Bugs (15%) ---
+  [PASS] 0 missing scripts or broken references found (+15 pts)
+  => Question 2 Subtotal: 15/15 pts
+
+--- QUESTION 3: Structured 3D Models / Primitives (15%) ---
+  [Q3.1 - 5 pts] 3D Models: 368 mesh filters, 368 mesh renderers (+5 pts)
+  [Q3.2 - 5 pts] Colliders: 235 colliders active (+5 pts)
+  [Q3.3 - 5 pts] 3D Models and materials clean without errors (+5 pts)
+  => Question 3 Subtotal: 15/15 pts
+
+--- QUESTION 4: Snap/Continuous Turn, Continuous Move, Tunneling Vignette (15%) ---
+  [Q4.1 - 5 pts] Snap Turn / Continuous Turn present (+5 pts)
+  [Q4.2 - 5 pts] Continuous Move provider present (+5 pts)
+  [Q4.3 - 5 pts] Tunneling Vignette present and linked (+5 pts)
+  => Question 4 Subtotal: 15/15 pts
+
+--- QUESTION 5: Teleportation Area, Teleportation Anchor & Reticle (15%) ---
+  [Q5.1 - 5 pts] Teleportation Area count: 1 (+5 pts)
+  [Q5.2 - 5 pts] Teleportation Anchor count: 3 (+5 pts)
+  [Q5.3 - 5 pts] Reticles: Anchors with custom reticle: 3/3, LineVisuals with reticle: 2/2
+  [PASS] Reticle properly configured (+5 pts)
+  => Question 5 Subtotal: 15/15 pts
+
+--- QUESTION 6: Grab Feature, >=3 Objects, Custom Hands, Attach & Physics (20%) ---
+  [Q6.1 - 5 pts] XRGrabInteractable present: True (+5 pts)
+  [Q6.2 - 5 pts] Grabbable Objects count: 3 (+5 pts)
+  [Q6.3 - 5 pts] Animated Hand Models: 2 hands found (+5 pts)
+    - Prop: 'Tutorial_GoldPan' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'Tutorial_Bucket' | Attach: Attach_Point | Rigidbody: YES | Collider: BoxCollider
+    - Prop: 'Tutorial_Pickaxe' | Attach: attach1 | Rigidbody: YES | Collider: BoxCollider
+  [Q6.4 - 5 pts] Valid Attach + Rigidbody + Collider: 3/3 (+5 pts)
+  => Question 6 Subtotal: 20/20 pts
+
+>>> SCENE GRAND TOTAL SCORE: 100/100 pts
+
+>>> AUDITING SCENE: Assets/Prospector-journey/Mainmenu/Mainmenu scene.unity
+
+--- QUESTION 1: Minimum 1 Level, EXE & APK (20%) ---
+  [Q1.1 - 5 pts] Playable Level exists: YES (+5 pts)
+  [Q1.2 - 5 pts] No compile errors in project: YES (+5 pts)
+  [Q1.3 - 5 pts] Android / Quest target supported: True (+5 pts)
+  [Q1.4 - 5 pts] XR Interaction Simulator in scene: True (+5 pts)
+  => Question 1 Subtotal: 20/20 pts
+
+--- QUESTION 2: No Errors or Bugs (15%) ---
+  [PASS] 0 missing scripts or broken references found (+15 pts)
+  => Question 2 Subtotal: 15/15 pts
+
+--- QUESTION 3: Structured 3D Models / Primitives (15%) ---
+  [Q3.1 - 5 pts] 3D Models: 84 mesh filters, 84 mesh renderers (+5 pts)
+  [Q3.2 - 5 pts] Colliders: 61 colliders active (+5 pts)
+  [Q3.3 - 5 pts] 3D Models and materials clean without errors (+5 pts)
+  => Question 3 Subtotal: 15/15 pts
+
+--- QUESTION 4: Snap/Continuous Turn, Continuous Move, Tunneling Vignette (15%) ---
+  [Q4.1 - 5 pts] Snap Turn / Continuous Turn present (+5 pts)
+  => Question 4 Subtotal: 5/15 pts
+
+--- QUESTION 5: Teleportation Area, Teleportation Anchor & Reticle (15%) ---
+  [Q5.3 - 5 pts] Reticles: Anchors with custom reticle: 0/0, LineVisuals with reticle: 0/0
+  => Question 5 Subtotal: 0/15 pts
+
+--- QUESTION 6: Grab Feature, >=3 Objects, Custom Hands, Attach & Physics (20%) ---
+  [Q6.2 - 5 pts] Grabbable Objects count: 0 (0 pts)
+  [Q6.3 - 5 pts] Animated Hand Models: 2 hands found (+5 pts)
+  [Q6.4 - 5 pts] Valid Attach + Rigidbody + Collider: 0/0 (0 pts)
+  => Question 6 Subtotal: 5/20 pts
+
+>>> SCENE GRAND TOTAL SCORE: 60/100 pts

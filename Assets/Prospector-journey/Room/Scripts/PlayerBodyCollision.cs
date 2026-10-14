@@ -43,6 +43,9 @@ namespace ProspectorJourney.Room
             m_XROrigin = GetComponent<XROrigin>();
             m_CharacterController = GetComponent<CharacterController>();
 
+            // Apply turn and locomotion preferences selected in Main Menu Game Options
+            ProspectorJourney.UI.VRSettingsApplier.ApplySettingsToRig(gameObject);
+
             if (m_XROrigin != null)
             {
                 if (m_XROrigin.Camera != null)
@@ -63,6 +66,8 @@ namespace ProspectorJourney.Room
             if (m_CameraOffsetTransform != null)
             {
                 m_InitialOffsetY = m_CameraOffsetTransform.localPosition.y;
+                if (m_InitialOffsetY < 0.1f)
+                    m_InitialOffsetY = 1.36144f;
                 m_CurrentOffsetLocalPos = new Vector3(0f, m_InitialOffsetY, 0f);
             }
 
@@ -120,24 +125,113 @@ namespace ProspectorJourney.Room
             m_CharacterController.center = new Vector3(0f, h * 0.5f + skinWidth, 0f);
         }
 
-        private void EnsureFurnitureColliders()
+        public void EnsureFurnitureColliders()
         {
-            var env = GameObject.Find("Environment_ProspectorCabin");
-            if (env == null) return;
+            // 1. Support Room scene (Environment_ProspectorCabin)
+            var cabinEnv = GameObject.Find("Environment_ProspectorCabin");
+            if (cabinEnv != null)
+            {
+                var meshFilters = cabinEnv.GetComponentsInChildren<MeshFilter>(true);
+                foreach (var mf in meshFilters)
+                {
+                    if (mf == null || mf.sharedMesh == null) continue;
+                    var go = mf.gameObject;
 
-            var meshFilters = env.GetComponentsInChildren<MeshFilter>(true);
+                    // Skip grabbable props, teleport anchors, rugs, and workbench (which uses Tabletop_Surface_Collider)
+                    if (go.GetComponentInParent<XRGrabInteractable>() != null) continue;
+                    if (go.GetComponentInParent<TeleportationAnchor>() != null) continue;
+                    if (go.name == "workbench" || go.name == "rugRound" || go.name.Contains("Visuals") || go.name.Contains("Anchor"))
+                        continue;
+
+                    if (go.GetComponent<Collider>() == null)
+                    {
+                        var mc = go.AddComponent<MeshCollider>();
+                        mc.sharedMesh = mf.sharedMesh;
+                    }
+                }
+            }
+
+            // 2. Support Tutorial scene (Environment2: trees, rocks, stumps, ground)
+            var env2 = GameObject.Find("Environment2");
+            if (env2 != null)
+            {
+                var meshFilters = env2.GetComponentsInChildren<MeshFilter>(true);
+                foreach (var mf in meshFilters)
+                {
+                    if (mf == null || mf.sharedMesh == null) continue;
+                    var go = mf.gameObject;
+
+                    if (go.GetComponentInParent<XRGrabInteractable>() != null) continue;
+                    if (go.GetComponentInParent<TeleportationAnchor>() != null) continue;
+
+                    // Skip foliage decals so we don't attach new colliders to grass/flowers
+                    if (IsFoliageDecal(go.name) || (go.transform.parent != null && IsFoliageDecal(go.transform.parent.name)))
+                        continue;
+
+                    // Ensure solid obstacle (tree, rock, stump, ground) has a collider
+                    if (go.GetComponent<Collider>() == null && go.GetComponentInParent<Collider>() == null && go.GetComponentInChildren<Collider>() == null)
+                    {
+                        var mc = go.AddComponent<MeshCollider>();
+                        mc.sharedMesh = mf.sharedMesh;
+                    }
+                }
+            }
+
+            // 3. Support root obstacle props in Tutorial scene:
+            // House_1, House_2, House_3, Bench, Crate, Fence, Pine Tree_1, Pine Tree_2, Lantern, Flower Pot, [Tutorial_Pond], Pond
+            string[] obstaclePropNames = new string[]
+            {
+                "House_1", "House_2", "House_3", "Bench", "Crate", "Fence",
+                "Pine Tree_1", "Pine Tree_2", "Lantern", "Flower Pot",
+                "[Tutorial_Pond]", "Pond", "Rock_"
+            };
+
+            var rootObjects = gameObject.scene.IsValid() ? gameObject.scene.GetRootGameObjects() : null;
+            if (rootObjects != null)
+            {
+                foreach (var rootGo in rootObjects)
+                {
+                    if (rootGo == null) continue;
+                    bool isTargetObstacle = false;
+                    for (int i = 0; i < obstaclePropNames.Length; i++)
+                    {
+                        if (rootGo.name.StartsWith(obstaclePropNames[i], System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            isTargetObstacle = true;
+                            break;
+                        }
+                    }
+
+                    if (isTargetObstacle)
+                    {
+                        EnsureObstacleColliders(rootGo);
+                    }
+                }
+            }
+
+            // Also check direct GameObject.Find in case rootObjects was unavailable
+            for (int i = 0; i < obstaclePropNames.Length; i++)
+            {
+                var propGo = GameObject.Find(obstaclePropNames[i]);
+                if (propGo != null)
+                {
+                    EnsureObstacleColliders(propGo);
+                }
+            }
+        }
+
+        private void EnsureObstacleColliders(GameObject obstacleRoot)
+        {
+            if (obstacleRoot == null) return;
+            var meshFilters = obstacleRoot.GetComponentsInChildren<MeshFilter>(true);
             foreach (var mf in meshFilters)
             {
                 if (mf == null || mf.sharedMesh == null) continue;
                 var go = mf.gameObject;
-
-                // Skip grabbable props, teleport anchors, rugs, and workbench (which uses Tabletop_Surface_Collider)
-                if (go.GetComponentInParent<XRGrabInteractable>() != null) continue;
-                if (go.GetComponentInParent<TeleportationAnchor>() != null) continue;
-                if (go.name == "workbench" || go.name == "rugRound" || go.name.Contains("Visuals") || go.name.Contains("Anchor"))
+                if (IsFoliageDecal(go.name) || (go.transform.parent != null && IsFoliageDecal(go.transform.parent.name)))
                     continue;
 
-                if (go.GetComponent<Collider>() == null)
+                if (go.GetComponent<Collider>() == null && go.GetComponentInParent<Collider>() == null && go.GetComponentInChildren<Collider>() == null)
                 {
                     var mc = go.AddComponent<MeshCollider>();
                     mc.sharedMesh = mf.sharedMesh;
@@ -145,7 +239,25 @@ namespace ProspectorJourney.Room
             }
         }
 
-        private void IgnoreGrabbableAndTeleportCollisions()
+        public static bool IsFoliageDecal(string objectName)
+        {
+            if (string.IsNullOrEmpty(objectName)) return false;
+            // Exclude Flower Pot (which is an obstacle prop)
+            if (objectName.IndexOf("Flower Pot", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return false;
+
+            return objectName.IndexOf("Grass", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Flowers", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Flower", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Mushroom", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Branch", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Water", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Lily", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("LilyPad", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || objectName.IndexOf("Leaf", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public void IgnoreGrabbableAndTeleportCollisions()
         {
             if (m_CharacterController == null) return;
 
@@ -180,6 +292,32 @@ namespace ProspectorJourney.Room
                 {
                     if (col != null && col != m_CharacterController)
                         Physics.IgnoreCollision(m_CharacterController, col, true);
+                }
+            }
+
+            // Ignore flat ground/foliage decals (Grass, Flowers, Mushroom, Branch) in Environment2 so player never snags
+            var env2 = GameObject.Find("Environment2");
+            if (env2 != null)
+            {
+                var foliageColliders = env2.GetComponentsInChildren<Collider>(true);
+                foreach (var col in foliageColliders)
+                {
+                    if (col == null || col == m_CharacterController) continue;
+                    if (IsFoliageDecal(col.gameObject.name) || (col.transform.parent != null && IsFoliageDecal(col.transform.parent.name)))
+                    {
+                        Physics.IgnoreCollision(m_CharacterController, col, true);
+                    }
+                }
+            }
+
+            // Global foliage collider ignore pass
+            var allColliders = FindObjectsByType<Collider>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var col in allColliders)
+            {
+                if (col == null || col == m_CharacterController) continue;
+                if (IsFoliageDecal(col.gameObject.name) || (col.transform.parent != null && IsFoliageDecal(col.transform.parent.name)))
+                {
+                    Physics.IgnoreCollision(m_CharacterController, col, true);
                 }
             }
         }
