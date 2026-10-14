@@ -6839,6 +6839,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2600885399999414009, guid: 1dff1b6d41153f04b89191ef1a82f20c, type: 3}
   m_PrefabInstance: {fileID: 586056083}
   m_PrefabAsset: {fileID: 0}
+--- !u!134 &590193715
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &609236511
 GameObject:
   m_ObjectHideFlags: 0
@@ -9519,19 +9532,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!134 &887334056
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &892706438
 GameObject:
   m_ObjectHideFlags: 0
@@ -13935,12 +13935,15 @@ MonoBehaviour:
   btnBackFromCredits: {fileID: 1048446991}
   enableLazyFollow: 1
   targetCamera: {fileID: 0}
-  followDistance: 1.35
-  heightOffset: 0.06
-  deadzoneAngle: 18
+  followDistance: 1.6
+  heightOffset: 0
+  deadzoneAngle: 20
   catchUpThreshold: 2
-  followSpeed: 4
-  heightSpeed: 3.5
+  followSpeed: 6
+  heightSpeed: 4
+  enableObstacleAvoidance: 1
+  obstacleBuffer: 0.25
+  minFollowDistance: 0.85
   enableSubtlePitch: 1
   maxPitchAngle: 12
 --- !u!114 &1321170162
@@ -20385,7 +20388,7 @@ PrefabInstance:
     - target: {fileID: 6232745470614056090, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 887334056}
+      objectReference: {fileID: 590193715}
     - target: {fileID: 9173983156334026967, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -20399,8 +20402,51 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1670256625, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1792514540}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1935650669}
+    - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1935650668}
   m_SourcePrefab: {fileID: 100100000, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+--- !u!1 &1935650667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1935650666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1935650668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935650667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24fd1fd8498fa14f8d5b6ec7aa6ac84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProspectorJourney.UI.MainMenuPlayerAnchor
+  spawnPosition: {x: 0, y: 0, z: 0}
+  maxDistanceLimit: 15
+  killY: -5
+--- !u!114 &1935650669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935650667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c4702045e23724887e7d066299cfb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProspectorJourney.Room.PlayerBodyCollision
+  bodyRadius: 0.24
+  stepOffset: 0.08
+  skinWidth: 0.025
+  minHeadHeight: 0.85
+  maxHeadHeight: 2.05
 --- !u!1 &1948666161
 GameObject:
   m_ObjectHideFlags: 0

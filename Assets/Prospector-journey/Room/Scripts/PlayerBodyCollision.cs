@@ -218,6 +218,43 @@ namespace ProspectorJourney.Room
                     EnsureObstacleColliders(propGo);
                 }
             }
+
+            // 4. Support Mainmenu scene (Diorama_Environment, campsite props, boundaries)
+            var dioramaEnv = GameObject.Find("Diorama_Environment");
+            if (dioramaEnv != null)
+            {
+                var meshFilters = dioramaEnv.GetComponentsInChildren<MeshFilter>(true);
+                foreach (var mf in meshFilters)
+                {
+                    if (mf == null || mf.sharedMesh == null) continue;
+                    var go = mf.gameObject;
+
+                    if (go.GetComponentInParent<XRGrabInteractable>() != null) continue;
+                    if (go.GetComponentInParent<TeleportationAnchor>() != null) continue;
+
+                    // Skip foliage decals
+                    if (IsFoliageDecal(go.name) || (go.transform.parent != null && IsFoliageDecal(go.transform.parent.name)))
+                        continue;
+
+                    // Ensure solid obstacle (cliff, rock, crate, bench, ground) has a collider
+                    if (go.GetComponent<Collider>() == null && go.GetComponentInParent<Collider>() == null && go.GetComponentInChildren<Collider>() == null)
+                    {
+                        var mc = go.AddComponent<MeshCollider>();
+                        mc.sharedMesh = mf.sharedMesh;
+                    }
+                }
+            }
+
+            // Also ensure colliders on root props in Mainmenu: fence, fence (1), bench
+            string[] mainMenuProps = new string[] { "fence", "fence (1)", "bench" };
+            foreach (var propName in mainMenuProps)
+            {
+                var propGo = GameObject.Find(propName);
+                if (propGo != null)
+                {
+                    EnsureObstacleColliders(propGo);
+                }
+            }
         }
 
         private void EnsureObstacleColliders(GameObject obstacleRoot)

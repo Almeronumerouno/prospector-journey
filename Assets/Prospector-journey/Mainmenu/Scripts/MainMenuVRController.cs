@@ -63,17 +63,23 @@ namespace ProspectorJourney.UI
         [Tooltip("Reference to the VR camera. Defaults to Camera.main.")]
         [SerializeField] private Transform targetCamera;
         [Tooltip("Distance from the camera in meters.")]
-        [SerializeField] private float followDistance = 1.85f;
+        [SerializeField] private float followDistance = 1.6f;
         [Tooltip("Height offset relative to camera eye level.")]
         [SerializeField] private float heightOffset = 0.0f;
         [Tooltip("Horizontal angle deadzone in degrees before menu catches up.")]
-        [SerializeField] private float deadzoneAngle = 18f;
+        [SerializeField] private float deadzoneAngle = 20f;
         [Tooltip("Angle at which catch-up concludes.")]
         [SerializeField] private float catchUpThreshold = 2.0f;
         [Tooltip("Horizontal smoothing speed.")]
-        [SerializeField] private float followSpeed = 4.0f;
+        [SerializeField] private float followSpeed = 6.0f;
         [Tooltip("Vertical height smoothing speed.")]
-        [SerializeField] private float heightSpeed = 3.5f;
+        [SerializeField] private float heightSpeed = 4.0f;
+
+        [Header("Obstacle Avoidance")]
+        [Tooltip("Avoid clipping menu into walls, rocks, and environment obstacles.")]
+        [SerializeField] private bool enableObstacleAvoidance = true;
+        [SerializeField] private float obstacleBuffer = 0.25f;
+        [SerializeField] private float minFollowDistance = 0.85f;
 
         [Header("Pitch Tilt Settings")]
         [Tooltip("Allow gentle pitch tilt towards camera without flying into ceiling/floor.")]
@@ -86,6 +92,7 @@ namespace ProspectorJourney.UI
         private Vector3 currentHorizontalFacing = Vector3.forward;
         private bool isCatchingUp = false;
         private Vector3 lastPosition;
+        private Vector3 lastCamPosition;
 
         private void Awake()
         {
@@ -138,7 +145,10 @@ namespace ProspectorJourney.UI
 
             BindButtonsRuntime();
             UpdateOptionsUI();
-            SnapToFront();
+            if (enableLazyFollow)
+            {
+                SnapToFront();
+            }
         }
 
         public void PlayHoverSound()
@@ -425,6 +435,8 @@ namespace ProspectorJourney.UI
 
         public void SnapToFront()
         {
+            if (!enableLazyFollow) return;
+
             if (targetCamera == null)
             {
                 var cam = Camera.main;
@@ -442,6 +454,7 @@ namespace ProspectorJourney.UI
             transform.position = snapPos;
             transform.rotation = ComputeTargetRotation(snapPos, currentHorizontalFacing);
             lastPosition = snapPos;
+            lastCamPosition = targetCamera.position;
             isCatchingUp = false;
             IsMenuMoving = false;
         }
@@ -465,11 +478,21 @@ namespace ProspectorJourney.UI
             Vector3 camFwd = targetCamera.forward;
             camFwd.y = 0f;
 
-            if (camFwd.sqrMagnitude < 0.001f) return;
-            camFwd.Normalize();
+            if (camFwd.sqrMagnitude < 0.001f) camFwd = Vector3.forward;
+            else camFwd.Normalize();
 
             // Calculate horizontal angle between current menu facing and camera forward
             float angle = Vector3.Angle(currentHorizontalFacing, camFwd);
+
+            // Check if player is actively walking/moving
+            Vector3 camDelta = camPos - lastCamPosition;
+            bool isPlayerWalking = camDelta.sqrMagnitude > 0.0001f;
+
+            if (isPlayerWalking)
+            {
+                // Translate in direct 1:1 lockstep with player movement so menu moves instantly with player
+                transform.position += camDelta;
+            }
 
             if (!isCatchingUp && angle > deadzoneAngle)
             {
@@ -480,18 +503,31 @@ namespace ProspectorJourney.UI
                 isCatchingUp = false;
             }
 
-            if (isCatchingUp)
+            // Smoothly align facing direction if catching up or walking
+            float rotSpeed = isCatchingUp ? followSpeed : (isPlayerWalking ? followSpeed * 0.75f : 0f);
+            if (rotSpeed > 0f)
             {
-                currentHorizontalFacing = Vector3.Slerp(currentHorizontalFacing, camFwd, followSpeed * Time.deltaTime).normalized;
+                currentHorizontalFacing = Vector3.Slerp(currentHorizontalFacing, camFwd, rotSpeed * Time.deltaTime).normalized;
             }
 
-            // Target position: strictly along horizontal direction at fixed distance, with smoothed Y height
-            Vector3 targetPos = camPos + currentHorizontalFacing * followDistance;
-            float desiredY = camPos.y + heightOffset;
-            float newY = Mathf.Lerp(transform.position.y, desiredY, heightSpeed * Time.deltaTime);
-            targetPos.y = newY;
+            // Calculate target distance with obstacle avoidance (stops at walls/rocks so menu doesn't penetrate)
+            float targetDist = followDistance;
+            if (enableObstacleAvoidance)
+            {
+                int obstacleMask = ~LayerMask.GetMask("UI", "Ignore Raycast");
+                if (Physics.SphereCast(camPos, 0.2f, currentHorizontalFacing, out RaycastHit hit, followDistance, obstacleMask, QueryTriggerInteraction.Ignore))
+                {
+                    targetDist = Mathf.Clamp(hit.distance - obstacleBuffer, minFollowDistance, followDistance);
+                }
+            }
 
-            transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
+            // Target position: horizontally in front of camera with target distance and eye-height offset
+            Vector3 targetPos = camPos + currentHorizontalFacing * targetDist;
+            targetPos.y = camPos.y + heightOffset;
+
+            // Highly responsive translation: when user stops or hits a wall, menu immediately settles
+            float posSpeed = isPlayerWalking ? 18f : 12f;
+            transform.position = Vector3.Lerp(transform.position, targetPos, posSpeed * Time.deltaTime);
 
             // Target rotation
             Quaternion targetRot = ComputeTargetRotation(transform.position, currentHorizontalFacing);
@@ -500,6 +536,7 @@ namespace ProspectorJourney.UI
             // Determine if the menu is considered in motion
             float moveDelta = (transform.position - lastPosition).sqrMagnitude;
             lastPosition = transform.position;
+            lastCamPosition = camPos;
             IsMenuMoving = isCatchingUp || (moveDelta > 0.0001f);
         }
 

@@ -279,6 +279,15 @@ namespace ProspectorJourney.UI
             Time.timeScale = 1.0f;
             IsGamePaused = false;
             Debug.Log($"[PauseMenuController] Quitting to Main Menu: {mainMenuScene}");
+
+            // Reset simulated input devices and simulator tracking state before transitioning
+            ProspectorJourney.Room.VRSimulatorSceneBinder.ResetSimulatedInputDevices();
+            var sim = FindAnyObjectByType<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator>();
+            if (sim != null)
+            {
+                ProspectorJourney.Room.VRSimulatorSceneBinder.ResetSimulatorTrackingStates(sim);
+            }
+
             SceneManager.LoadSceneAsync(mainMenuScene);
         }
 

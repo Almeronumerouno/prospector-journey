@@ -651,6 +651,28 @@ namespace ProspectorJourney.Room
                 xrOrigin.transform.rotation = targetRot;
                 Debug.Log($"[VRSimulatorSceneBinder] Player positioned at Tutorial cabin door porch: {targetPos}");
             }
+            else if (scene.name == "Mainmenu scene" || scene.name == "MainMenu")
+            {
+                xrOrigin.transform.position = Vector3.zero;
+                xrOrigin.transform.rotation = Quaternion.identity;
+                if (xrOrigin.CameraFloorOffsetObject != null)
+                {
+                    xrOrigin.CameraFloorOffsetObject.transform.localPosition = new Vector3(0f, 1.36144f, 0f);
+                    xrOrigin.CameraFloorOffsetObject.transform.localRotation = Quaternion.identity;
+                }
+                if (xrOrigin.Camera != null)
+                {
+                    xrOrigin.Camera.transform.localPosition = Vector3.zero;
+                    xrOrigin.Camera.transform.localRotation = Quaternion.identity;
+                }
+                ResetSimulatedInputDevices();
+                var sim = Object.FindAnyObjectByType<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator>();
+                if (sim != null)
+                {
+                    ResetSimulatorTrackingStates(sim);
+                }
+                Debug.Log($"[VRSimulatorSceneBinder] Player anchored at Main Menu spawn (0, 0, 0)");
+            }
 
             if (cc != null) cc.enabled = true;
         }
@@ -801,7 +823,195 @@ namespace ProspectorJourney.Room
                 xrOriginField.SetValue(sim, xrOrigin);
             }
 
+            // 8. If entering Main Menu, reset all simulated device positions/rotations
+            if (scene.name == "Mainmenu scene" || scene.name == "MainMenu")
+            {
+                ResetSimulatorTrackingStates(sim);
+                ResetSimulatedInputDevices();
+            }
+
             Debug.Log($"[VRSimulatorSceneBinder] Simulator refreshed for '{scene.name}': Cam={mainCam != null}, LeftCtrl={leftCtrl != null}, RightCtrl={rightCtrl != null}, PhysicsScene={scene.GetPhysicsScene().IsValid()}");
+        }
+
+        public static void ResetSimulatedInputDevices()
+        {
+            try
+            {
+                foreach (var device in UnityEngine.InputSystem.InputSystem.devices)
+                {
+                    if (device is UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRSimulatedHMD hmd)
+                    {
+                        var st = new UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRSimulatedHMDState();
+                        st.Reset();
+                        UnityEngine.InputSystem.LowLevel.InputState.Change(hmd, st);
+                    }
+                    else if (device is UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRSimulatedController ctrl)
+                    {
+                        var st = new UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRSimulatedControllerState();
+                        st.Reset();
+                        bool isLeft = ctrl.name.IndexOf("Left", System.StringComparison.OrdinalIgnoreCase) >= 0;
+                        st.devicePosition = isLeft ? new Vector3(-0.1f, -0.05f, 0.3f) : new Vector3(0.1f, -0.05f, 0.3f);
+                        UnityEngine.InputSystem.LowLevel.InputState.Change(ctrl, st);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[VRSimulatorSceneBinder] ResetSimulatedInputDevices non-fatal warning: {ex.Message}");
+            }
+        }
+
+        public static void ResetSimulatorTrackingStates(UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator sim)
+        {
+            if (sim == null) return;
+
+            try
+            {
+                var simType = typeof(UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator);
+
+                // 1. Reset Euler Angles
+                var centerEulerField = simType.GetField("m_CenterEyeEuler", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (centerEulerField != null) centerEulerField.SetValue(sim, Vector3.zero);
+
+                var leftEulerField = simType.GetField("m_LeftControllerEuler", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (leftEulerField != null) leftEulerField.SetValue(sim, Vector3.zero);
+
+                var rightEulerField = simType.GetField("m_RightControllerEuler", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (rightEulerField != null) rightEulerField.SetValue(sim, Vector3.zero);
+
+                // 2. Reset HMD State
+                var hmdStateField = simType.GetField("m_HMDState", BindingFlags.NonPublic | BindingFlags.Instance);
+                object hmdStateObj = null;
+                if (hmdStateField != null)
+                {
+                    var hmdStateType = hmdStateField.FieldType;
+                    var resetMethod = hmdStateType.GetMethod("Reset", BindingFlags.Public | BindingFlags.Instance);
+                    hmdStateObj = hmdStateField.GetValue(sim);
+                    if (hmdStateObj != null && resetMethod != null)
+                    {
+                        resetMethod.Invoke(hmdStateObj, null);
+                    }
+                    else
+                    {
+                        hmdStateObj = System.Activator.CreateInstance(hmdStateType);
+                    }
+                    hmdStateField.SetValue(sim, hmdStateObj);
+                }
+
+                // 3. Reset Controller States
+                Vector3 leftDefaultPos = new Vector3(-0.1f, -0.05f, 0.3f);
+                Vector3 rightDefaultPos = new Vector3(0.1f, -0.05f, 0.3f);
+
+                var leftCtrlStateField = simType.GetField("m_LeftControllerState", BindingFlags.NonPublic | BindingFlags.Instance);
+                object leftCtrlStateObj = null;
+                if (leftCtrlStateField != null)
+                {
+                    var leftType = leftCtrlStateField.FieldType;
+                    var resetMethod = leftType.GetMethod("Reset", BindingFlags.Public | BindingFlags.Instance);
+                    leftCtrlStateObj = leftCtrlStateField.GetValue(sim);
+                    if (leftCtrlStateObj != null && resetMethod != null)
+                    {
+                        resetMethod.Invoke(leftCtrlStateObj, null);
+                    }
+                    else
+                    {
+                        leftCtrlStateObj = System.Activator.CreateInstance(leftType);
+                    }
+                    var posField = leftType.GetField("devicePosition", BindingFlags.Public | BindingFlags.Instance);
+                    if (posField != null) posField.SetValue(leftCtrlStateObj, leftDefaultPos);
+                    leftCtrlStateField.SetValue(sim, leftCtrlStateObj);
+                }
+
+                var rightCtrlStateField = simType.GetField("m_RightControllerState", BindingFlags.NonPublic | BindingFlags.Instance);
+                object rightCtrlStateObj = null;
+                if (rightCtrlStateField != null)
+                {
+                    var rightType = rightCtrlStateField.FieldType;
+                    var resetMethod = rightType.GetMethod("Reset", BindingFlags.Public | BindingFlags.Instance);
+                    rightCtrlStateObj = rightCtrlStateField.GetValue(sim);
+                    if (rightCtrlStateObj != null && resetMethod != null)
+                    {
+                        resetMethod.Invoke(rightCtrlStateObj, null);
+                    }
+                    else
+                    {
+                        rightCtrlStateObj = System.Activator.CreateInstance(rightType);
+                    }
+                    var posField = rightType.GetField("devicePosition", BindingFlags.Public | BindingFlags.Instance);
+                    if (posField != null) posField.SetValue(rightCtrlStateObj, rightDefaultPos);
+                    rightCtrlStateField.SetValue(sim, rightCtrlStateObj);
+                }
+
+                // 4. Reset Hand States
+                var leftHandStateField = simType.GetField("m_LeftHandState", BindingFlags.NonPublic | BindingFlags.Instance);
+                object leftHandStateObj = null;
+                if (leftHandStateField != null)
+                {
+                    var handType = leftHandStateField.FieldType;
+                    var resetMethod = handType.GetMethod("Reset", BindingFlags.Public | BindingFlags.Instance);
+                    leftHandStateObj = leftHandStateField.GetValue(sim);
+                    if (leftHandStateObj != null && resetMethod != null)
+                    {
+                        resetMethod.Invoke(leftHandStateObj, null);
+                    }
+                    else
+                    {
+                        leftHandStateObj = System.Activator.CreateInstance(handType);
+                    }
+                    var posField = handType.GetField("position", BindingFlags.Public | BindingFlags.Instance);
+                    if (posField != null) posField.SetValue(leftHandStateObj, leftDefaultPos);
+                    leftHandStateField.SetValue(sim, leftHandStateObj);
+                }
+
+                var rightHandStateField = simType.GetField("m_RightHandState", BindingFlags.NonPublic | BindingFlags.Instance);
+                object rightHandStateObj = null;
+                if (rightHandStateField != null)
+                {
+                    var handType = rightHandStateField.FieldType;
+                    var resetMethod = handType.GetMethod("Reset", BindingFlags.Public | BindingFlags.Instance);
+                    rightHandStateObj = rightHandStateField.GetValue(sim);
+                    if (rightHandStateObj != null && resetMethod != null)
+                    {
+                        resetMethod.Invoke(rightHandStateObj, null);
+                    }
+                    else
+                    {
+                        rightHandStateObj = System.Activator.CreateInstance(handType);
+                    }
+                    var posField = handType.GetField("position", BindingFlags.Public | BindingFlags.Instance);
+                    if (posField != null) posField.SetValue(rightHandStateObj, rightDefaultPos);
+                    rightHandStateField.SetValue(sim, rightHandStateObj);
+                }
+
+                // 5. Apply states to SimulatedDeviceLifecycleManager
+                var dlmField = simType.GetField("m_DeviceLifecycleManager", BindingFlags.NonPublic | BindingFlags.Instance);
+                object dlmObj = dlmField != null ? dlmField.GetValue(sim) : null;
+                if (dlmObj != null)
+                {
+                    var dlmType = dlmObj.GetType();
+                    if (hmdStateObj != null)
+                    {
+                        var applyHmd = dlmType.GetMethod("ApplyHMDState", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (applyHmd != null) applyHmd.Invoke(dlmObj, new object[] { hmdStateObj });
+                    }
+                    if (leftCtrlStateObj != null && rightCtrlStateObj != null)
+                    {
+                        var applyCtrl = dlmType.GetMethod("ApplyControllerState", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (applyCtrl != null) applyCtrl.Invoke(dlmObj, new object[] { leftCtrlStateObj, rightCtrlStateObj });
+                    }
+                    if (leftHandStateObj != null && rightHandStateObj != null)
+                    {
+                        var applyHand = dlmType.GetMethod("ApplyHandState", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (applyHand != null) applyHand.Invoke(dlmObj, new object[] { leftHandStateObj, rightHandStateObj });
+                    }
+                }
+
+                Debug.Log("[VRSimulatorSceneBinder] Simulator HMD, Controller, and Hand states completely reset to origin (0, 0, 0).");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[VRSimulatorSceneBinder] ResetSimulatorTrackingStates non-fatal warning: {ex.Message}");
+            }
         }
     }
 
