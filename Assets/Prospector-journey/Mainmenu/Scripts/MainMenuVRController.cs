@@ -506,51 +506,44 @@ namespace ProspectorJourney.UI
             if (camFwd.sqrMagnitude < 0.001f) camFwd = Vector3.forward;
             else camFwd.Normalize();
 
-            // Calculate horizontal angle between current menu facing and camera forward
-            float angle = Vector3.Angle(currentHorizontalFacing, camFwd);
-
-            // Check if player is actively walking/moving
+            // Check if player is actively walking/moving horizontally
             Vector3 camDelta = camPos - lastCamPosition;
+            camDelta.y = 0f;
             bool isPlayerWalking = camDelta.sqrMagnitude > 0.0001f;
 
             if (isPlayerWalking)
             {
-                // Translate in direct 1:1 lockstep with player movement so menu moves instantly with player
+                // Translate in direct lockstep with player movement so menu moves instantly when user walks
                 transform.position += camDelta;
-            }
 
-            // Smoothly rotate facing direction towards camera gaze forward at all times
-            // When user looks around in VR, menu smoothly turns with head gaze without getting stuck
-            if (angle > 0.1f)
-            {
-                float rotSpeed = Mathf.Lerp(followSpeed, followSpeed * 1.6f, Mathf.Clamp01(angle / 45f));
-                currentHorizontalFacing = Vector3.Slerp(currentHorizontalFacing, camFwd, rotSpeed * Time.deltaTime).normalized;
-            }
-
-            // Calculate target distance with obstacle avoidance (stops at walls/rocks so menu doesn't penetrate)
-            float targetDist = followDistance;
-            if (enableObstacleAvoidance)
-            {
-                int obstacleMask = ~LayerMask.GetMask("UI", "Ignore Raycast");
-                if (Physics.SphereCast(camPos, 0.2f, currentHorizontalFacing, out RaycastHit hit, followDistance, obstacleMask, QueryTriggerInteraction.Ignore))
+                // While walking, smoothly update facing direction towards camera forward
+                float angle = Vector3.Angle(currentHorizontalFacing, camFwd);
+                if (angle > 10f)
                 {
-                    targetDist = Mathf.Clamp(hit.distance - obstacleBuffer, minFollowDistance, followDistance);
+                    currentHorizontalFacing = Vector3.Slerp(currentHorizontalFacing, camFwd, followSpeed * Time.deltaTime).normalized;
                 }
+
+                // Obstacle avoidance: prevent menu from penetrating walls/rocks if player walks into obstacles
+                if (enableObstacleAvoidance)
+                {
+                    int obstacleMask = ~LayerMask.GetMask("UI", "Ignore Raycast");
+                    if (Physics.SphereCast(camPos, 0.2f, currentHorizontalFacing, out RaycastHit hit, followDistance, obstacleMask, QueryTriggerInteraction.Ignore))
+                    {
+                        float safeDist = Mathf.Clamp(hit.distance - obstacleBuffer, minFollowDistance, followDistance);
+                        Vector3 safePos = camPos + currentHorizontalFacing * safeDist;
+                        safePos.y = camPos.y + heightOffset;
+                        transform.position = Vector3.Lerp(transform.position, safePos, 15f * Time.deltaTime);
+                    }
+                }
+
+                // Smoothly orient facing towards player while walking
+                Quaternion targetRot = ComputeTargetRotation(transform.position, currentHorizontalFacing);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, followSpeed * Time.deltaTime);
             }
+            // When user is standing still ("player stay"):
+            // The board stays 100% stationary in 3D world space.
+            // Head gaze rotation does NOT move the board, allowing natural 360° VR immersion!
 
-            // Target position: horizontally in front of camera with target distance and eye-height offset
-            Vector3 targetPos = camPos + currentHorizontalFacing * targetDist;
-            targetPos.y = camPos.y + heightOffset;
-
-            // Highly responsive translation: when user stops or hits a wall, menu immediately settles
-            float posSpeed = isPlayerWalking ? 18f : 12f;
-            transform.position = Vector3.Lerp(transform.position, targetPos, posSpeed * Time.deltaTime);
-
-            // Target rotation
-            Quaternion targetRot = ComputeTargetRotation(transform.position, currentHorizontalFacing);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, followSpeed * Time.deltaTime);
-
-            // Determine if the menu is considered in active translational motion
             float moveDelta = (transform.position - lastPosition).sqrMagnitude;
             lastPosition = transform.position;
             lastCamPosition = camPos;
