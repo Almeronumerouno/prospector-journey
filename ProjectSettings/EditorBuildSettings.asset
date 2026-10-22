@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Prospector-journey/Mainmenu/Mainmenu scene.unity
     guid: 3b2e0312a59a0ce4e8bad8c3d46ab4fa
-  - enabled: 1
+  - enabled: 0
     path: Assets/Prospector-journey/Mainmenu/MainMenu.unity
     guid: 56996d61b6344dd4a269369aad35fb49
   - enabled: 1
@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: b5df7e06dc770bc438ae6fcc527eba78
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    guid: 55daccc09a3b69647bbab145b54a3ab3
   - enabled: 1
     path: Assets/Prospector-journey/Gameplay/Village.unity
     guid: a6c782db10356fe4a93dd4985d7c143a

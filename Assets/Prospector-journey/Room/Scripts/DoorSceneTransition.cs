@@ -657,19 +657,29 @@ namespace ProspectorJourney.Room
                 xrOrigin.transform.rotation = Quaternion.identity;
                 if (xrOrigin.CameraFloorOffsetObject != null)
                 {
-                    xrOrigin.CameraFloorOffsetObject.transform.localPosition = new Vector3(0f, 1.36144f, 0f);
+                    if (PlayerBodyCollision.IsRealVRDeviceActive() || xrOrigin.RequestedTrackingOriginMode == Unity.XR.CoreUtils.XROrigin.TrackingOriginMode.Floor || xrOrigin.CurrentTrackingOriginMode == UnityEngine.XR.TrackingOriginModeFlags.Floor)
+                    {
+                        xrOrigin.CameraFloorOffsetObject.transform.localPosition = Vector3.zero;
+                    }
+                    else
+                    {
+                        xrOrigin.CameraFloorOffsetObject.transform.localPosition = new Vector3(0f, xrOrigin.CameraYOffset > 0 ? xrOrigin.CameraYOffset : 1.67f, 0f);
+                    }
                     xrOrigin.CameraFloorOffsetObject.transform.localRotation = Quaternion.identity;
                 }
-                if (xrOrigin.Camera != null)
+                if (xrOrigin.Camera != null && !PlayerBodyCollision.IsRealVRDeviceActive())
                 {
-                    xrOrigin.Camera.transform.localPosition = Vector3.zero;
+                    xrOrigin.Camera.transform.localPosition = new Vector3(0f, xrOrigin.CameraYOffset > 0 ? xrOrigin.CameraYOffset : 1.67f, 0f);
                     xrOrigin.Camera.transform.localRotation = Quaternion.identity;
                 }
-                ResetSimulatedInputDevices();
-                var sim = Object.FindAnyObjectByType<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator>();
-                if (sim != null)
+                if (!PlayerBodyCollision.IsRealVRDeviceActive())
                 {
-                    ResetSimulatorTrackingStates(sim);
+                    ResetSimulatedInputDevices();
+                    var sim = Object.FindAnyObjectByType<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator>();
+                    if (sim != null)
+                    {
+                        ResetSimulatorTrackingStates(sim);
+                    }
                 }
                 Debug.Log($"[VRSimulatorSceneBinder] Player anchored at Main Menu spawn (0, 0, 0)");
             }

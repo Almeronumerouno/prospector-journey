@@ -1,0 +1,9 @@
+=== START MAIN MENU RETURN & COLLISION AUDIT ===
+[TEST 1 PASS] Started in Tutorial scene, rig pos=(22.80, 1.21, 2.30)
+[TEST 2 PASS] Pause toggled and OnClickQuitToMainMenu invoked.
+[TEST 3 PASS] Player anchored at (0, 0, 0): Rig=(0.00, 0.00, 0.00), Cam=(0.00, 1.36, 0.00)
+[TEST 4 PASS] Collision & Anchor components active.
+[TEST 5 PASS] No invisible walls & canvas does not block locomotion.
+[TEST 6 PASS] Free locomotion: Moved Z=3.00m
+[TEST 7 PASS] Canvas follows player (dist=1.60m) and stops cleanly when player stops (drift=0.0000m).
+=== AUDIT RESULT: 7/7 PASSED ===

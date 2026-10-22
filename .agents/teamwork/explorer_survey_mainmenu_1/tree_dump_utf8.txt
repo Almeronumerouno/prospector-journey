@@ -1,0 +1,166 @@
+Parsed 73 GameObjects, 73 Transforms, 226 Components.
+VR_MainMenu_Canvas ID: 1321170159
+- VR_MainMenu_Canvas (GO:1321170159, Tr:RectTransform) Comps: Canvas, MonoBehaviour, MonoBehaviour, MonoBehaviour, AudioSource, CanvasGroup
+    [Canvas] RenderMode: 2
+    [RectTransform] Pos=(0, 1.45), Size=(1500, 950), Min=(0.5, 0.5), Max=(0.5, 0.5), Scale=(0.001, 0.001, 0.001)
+  - Board_Background (GO:1687171002, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+      [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+    - Gold_Frame (GO:1319634031, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+        [RectTransform] Pos=(0, 0), Size=(-32, -32), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+      - Inner_Board (GO:1212624254, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+          [RectTransform] Pos=(0, 0), Size=(-8, -8), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+        - Header_Section (GO:505553723, Tr:RectTransform) Comps: 
+            [RectTransform] Pos=(0, 0), Size=(0, 180), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+          - Title_Text (GO:279430716, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+              [TMP] text='PROSPECTOR JOURNEY', size=70, color=RGBA(1, 0.78, 0.25, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+              [RectTransform] Pos=(0, -25), Size=(0, 85), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+          - Subtitle_Text (GO:1974459084, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+              [TMP] text='VR GOLD PANNING & RIVER CLAIM SIMULATION', size=24, color=RGBA(0.92, 0.84, 0.72, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+              [RectTransform] Pos=(0, -110), Size=(0, 40), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+          - Gold_Divider (GO:1073927727, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+              [RectTransform] Pos=(0, 5), Size=(0, 4), Min=(0.1, 0), Max=(0.9, 0), Scale=(1, 1, 1)
+        - Panels_Content (GO:264329703, Tr:RectTransform) Comps: 
+            [RectTransform] Pos=(0, -80), Size=(-100, -220), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+          - Main_Buttons_Panel [INACTIVE] (GO:1759804371, Tr:RectTransform) Comps: MonoBehaviour
+              [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_StartExpedition (GO:1231874296, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(680, -91.4), Size=(620, 85), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Label (GO:661137788, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='START EXPEDITION', size=32, color=RGBA(1, 0.96, 0.88, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_Tutorial (GO:86302643, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(680, -229.70001), Size=(620, 72), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Label (GO:1622465505, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='GAME TUTORIAL', size=26, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_Settings (GO:1251254214, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(680, -361.5), Size=(620, 72), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Label (GO:1248661603, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='GAME OPTIONS', size=26, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_Credits (GO:14464313, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(680, -493.30002), Size=(620, 72), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Label (GO:347588514, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='CREDITS', size=26, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_Quit (GO:709187463, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(680, -620.10004), Size=(620, 62), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Label (GO:860825247, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='QUIT GAME', size=22, color=RGBA(0.92, 0.75, 0.75, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+          - Settings_Panel [INACTIVE] (GO:1398607371, Tr:RectTransform) Comps: 
+              [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Section_Title (GO:63793025, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [TMP] text='GAME OPTIONS', size=42, color=RGBA(1, 0.88, 0.55, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                [RectTransform] Pos=(0, -50), Size=(800, 60), Min=(0.5, 1), Max=(0.5, 1), Scale=(1, 1, 1)
+            - Frame_GameOptions (GO:1148180395, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(0, -235), Size=(960, 260), Min=(0.5, 1), Max=(0.5, 1), Scale=(1, 1, 1)
+              - Row_TurnType (GO:1031750534, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [RectTransform] Pos=(0, 48), Size=(880, 76), Min=(0.5, 0.5), Max=(0.5, 0.5), Scale=(1, 1, 1)
+                - Label (GO:316049331, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                    [TMP] text='TURN TYPE', size=28, color=RGBA(1, 0.95, 0.85, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                    [RectTransform] Pos=(30, 0), Size=(400, 50), Min=(0, 0.5), Max=(0, 0.5), Scale=(1, 1, 1)
+                - Selector_Group (GO:923667834, Tr:RectTransform) Comps: 
+                    [RectTransform] Pos=(-25, 0), Size=(340, 60), Min=(1, 0.5), Max=(1, 0.5), Scale=(1, 1, 1)
+                  - Btn_Prev (GO:146680552, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                      [RectTransform] Pos=(30, 0), Size=(52, 52), Min=(0, 0.5), Max=(0, 0.5), Scale=(1, 1, 1)
+                    - Arrow (GO:315074623, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                        [TMP] text='<', size=32, color=RGBA(1, 0.86, 0.45, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                        [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+                  - Text_Value (GO:481765705, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                      [TMP] text='SNAP', size=28, color=RGBA(1, 1, 1, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                      [RectTransform] Pos=(0, 0), Size=(190, 52), Min=(0.5, 0.5), Max=(0.5, 0.5), Scale=(1, 1, 1)
+                  - Btn_Next (GO:759318956, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                      [RectTransform] Pos=(-30, 0), Size=(52, 52), Min=(1, 0.5), Max=(1, 0.5), Scale=(1, 1, 1)
+                    - Arrow (GO:1584956268, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                        [TMP] text=''>'', size=32, color=RGBA(1, 0.86, 0.45, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                        [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+              - Row_LocomotionType (GO:1587154060, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [RectTransform] Pos=(0, -48), Size=(880, 76), Min=(0.5, 0.5), Max=(0.5, 0.5), Scale=(1, 1, 1)
+                - Label (GO:1800098300, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                    [TMP] text='LOCOMOTION TYPE', size=28, color=RGBA(1, 0.95, 0.85, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                    [RectTransform] Pos=(30, 0), Size=(400, 50), Min=(0, 0.5), Max=(0, 0.5), Scale=(1, 1, 1)
+                - Selector_Group (GO:441262231, Tr:RectTransform) Comps: 
+                    [RectTransform] Pos=(-25, 0), Size=(340, 60), Min=(1, 0.5), Max=(1, 0.5), Scale=(1, 1, 1)
+                  - Btn_Prev (GO:571756245, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                      [RectTransform] Pos=(30, 0), Size=(52, 52), Min=(0, 0.5), Max=(0, 0.5), Scale=(1, 1, 1)
+                    - Arrow (GO:989977773, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                        [TMP] text='<', size=32, color=RGBA(1, 0.86, 0.45, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                        [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+                  - Text_Value (GO:10370343, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                      [TMP] text='TELEPORT', size=28, color=RGBA(1, 1, 1, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                      [RectTransform] Pos=(0, 0), Size=(190, 52), Min=(0.5, 0.5), Max=(0.5, 0.5), Scale=(1, 1, 1)
+                  - Btn_Next (GO:1928942347, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                      [RectTransform] Pos=(-30, 0), Size=(52, 52), Min=(1, 0.5), Max=(1, 0.5), Scale=(1, 1, 1)
+                    - Arrow (GO:494965121, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                        [TMP] text=''>'', size=32, color=RGBA(1, 0.86, 0.45, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                        [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_SaveAndExit (GO:1317975372, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(0, -440), Size=(440, 68), Min=(0.5, 1), Max=(0.5, 1), Scale=(1, 1, 1)
+              - Label (GO:482202902, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='SAVE AND EXIT', size=28, color=RGBA(1, 0.96, 0.9, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+          - Tutorial_Panel [INACTIVE] (GO:1347507813, Tr:RectTransform) Comps: MonoBehaviour
+              [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Section_Title (GO:747052802, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [TMP] text=''- HOW TO BECOME A PROSPECTOR -'', size=28, color=RGBA(1, 0.8, 0.35, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                [RectTransform] Pos=(680, -52.5), Size=(800, 45), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+            - Card_1. (GO:285604148, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [RectTransform] Pos=(680, -156), Size=(850, 70), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Title (GO:662166661, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='1. SCOOP SAND & GRAVEL', size=21, color=RGBA(1, 0.82, 0.35, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(20, -6), Size=(800, 26), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+              - Description (GO:2106350438, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='Use your hand shovel to scoop sand along the riverbank into your gold pan.', size=18, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, -14), Size=(-40, -36), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Card_2. (GO:337982285, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [RectTransform] Pos=(680, -272), Size=(850, 70), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Title (GO:1542305082, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='2. SUBMERGE IN RIVER', size=21, color=RGBA(1, 0.82, 0.35, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(20, -6), Size=(800, 26), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+              - Description (GO:758047211, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='Dip your filled pan into the running river water to wet the material.', size=18, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, -14), Size=(-40, -36), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Card_3. (GO:1230242437, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [RectTransform] Pos=(680, -388), Size=(850, 70), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Title (GO:2010581504, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='3. HORIZONTAL SHAKE', size=21, color=RGBA(1, 0.82, 0.35, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(20, -6), Size=(800, 26), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+              - Description (GO:1570075648, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='Shake your VR controller left-to-right. River current sweeps away light', size=18, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, -14), Size=(-40, -36), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Card_4. (GO:457176112, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [RectTransform] Pos=(680, -504), Size=(850, 70), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Title (GO:40340308, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='4. CLAIM YOUR GOLD', size=21, color=RGBA(1, 0.82, 0.35, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(20, -6), Size=(800, 26), Min=(0, 1), Max=(1, 1), Scale=(1, 1, 1)
+              - Description (GO:633464111, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='Dense precious gold nuggets remain at the pan's bottom. Pick & sell them!', size=18, color=RGBA(0.92, 0.86, 0.78, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, -14), Size=(-40, -36), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Tutorial_Buttons_Row (GO:1804971832, Tr:RectTransform) Comps: MonoBehaviour
+                [RectTransform] Pos=(680, -622.5), Size=(850, 75), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Btn_LaunchTutorialScene (GO:892706438, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                  [RectTransform] Pos=(217.5, -37.5), Size=(400, 68), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+                - Label (GO:1717058360, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                    [TMP] text='OPEN TUTORIAL SCENE', size=24, color=RGBA(1, 0.96, 0.88, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                    [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+              - Btn_BackFromTutorial (GO:1450380584, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                  [RectTransform] Pos=(657.5, -37.5), Size=(350, 68), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+                - Label (GO:2020917585, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                    [TMP] text='< BACK TO MAIN', size=24, color=RGBA(0.95, 0.9, 0.82, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                    [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+          - Credits_Panel [INACTIVE] (GO:1285441568, Tr:RectTransform) Comps: MonoBehaviour
+              [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Section_Title (GO:2131072882, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [TMP] text=''- ABOUT PROSPECTOR JOURNEY -'', size=28, color=RGBA(1, 0.8, 0.35, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                [RectTransform] Pos=(680, -80.33333), Size=(800, 45), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+            - Credits_Card (GO:333742057, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                [RectTransform] Pos=(680, -333.5), Size=(850, 260), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Credits_Text (GO:1656324637, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text=''<b>PROSPECTOR JOURNEY</b>', size=24, color=RGBA(0.94, 0.88, 0.8, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(-50, -40), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)
+            - Btn_BackFromCredits (GO:1829592956, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour, MonoBehaviour, MonoBehaviour
+                [RectTransform] Pos=(680, -598.1666), Size=(480, 68), Min=(0, 1), Max=(0, 1), Scale=(1, 1, 1)
+              - Label (GO:1127606016, Tr:RectTransform) Comps: CanvasRenderer, MonoBehaviour
+                  [TMP] text='< BACK TO MAIN MENU', size=24, color=RGBA(0.95, 0.9, 0.82, 1), font=guid:0161d805a3764c089bef00bfe00793f5
+                  [RectTransform] Pos=(0, 0), Size=(0, 0), Min=(0, 0), Max=(1, 1), Scale=(1, 1, 1)

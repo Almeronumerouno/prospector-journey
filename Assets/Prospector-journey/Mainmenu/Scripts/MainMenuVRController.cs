@@ -55,25 +55,25 @@ namespace ProspectorJourney.UI
         public enum LocomotionTypeOption { Teleport = 0, Continuous = 1 }
 
         private TurnTypeOption currentTurnType = TurnTypeOption.Snap;
-        private LocomotionTypeOption currentLocomotionType = LocomotionTypeOption.Teleport;
+        private LocomotionTypeOption currentLocomotionType = LocomotionTypeOption.Continuous;
 
         [Header("VR Lazy Follow Settings")]
         [Tooltip("Enable smooth VR follow that stays at eye height and respects horizontal gaze.")]
-        [SerializeField] private bool enableLazyFollow = true;
+        [SerializeField] private bool enableLazyFollow = false;
         [Tooltip("Reference to the VR camera. Defaults to Camera.main.")]
         [SerializeField] private Transform targetCamera;
         [Tooltip("Distance from the camera in meters.")]
         [SerializeField] private float followDistance = 1.6f;
         [Tooltip("Height offset relative to camera eye level.")]
         [SerializeField] private float heightOffset = 0.0f;
-        [Tooltip("Horizontal angle deadzone in degrees before menu catches up.")]
-        [SerializeField] private float deadzoneAngle = 20f;
-        [Tooltip("Angle at which catch-up concludes.")]
-        [SerializeField] private float catchUpThreshold = 2.0f;
         [Tooltip("Horizontal smoothing speed.")]
         [SerializeField] private float followSpeed = 6.0f;
-        [Tooltip("Vertical height smoothing speed.")]
-        [SerializeField] private float heightSpeed = 4.0f;
+
+        [Header("Stationary 3D World Placement")]
+        [Tooltip("World position when enableLazyFollow is false.")]
+        [SerializeField] private Vector3 stationaryWorldPosition = new Vector3(0f, 1.45f, 1.85f);
+        [Tooltip("World Euler rotation when enableLazyFollow is false (faces player spawn at 0,0,0).")]
+        [SerializeField] private Vector3 stationaryWorldEuler = Vector3.zero;
 
         [Header("Obstacle Avoidance")]
         [Tooltip("Avoid clipping menu into walls, rocks, and environment obstacles.")]
@@ -87,10 +87,24 @@ namespace ProspectorJourney.UI
         [Tooltip("Max pitch angle in degrees (strictly clamped so menu never flips flat).")]
         [SerializeField] private float maxPitchAngle = 12f;
 
+        public bool EnableLazyFollow => enableLazyFollow;
+        public Vector3 StationaryWorldPosition => stationaryWorldPosition;
+        public Vector3 StationaryWorldEuler => stationaryWorldEuler;
+
+        public void SetLazyFollow(bool enabled)
+        {
+            enableLazyFollow = enabled;
+        }
+
+        public void SetStationaryPlacement(Vector3 pos, Vector3 euler)
+        {
+            stationaryWorldPosition = pos;
+            stationaryWorldEuler = euler;
+        }
+
         public bool IsMenuMoving { get; private set; }
 
         private Vector3 currentHorizontalFacing = Vector3.forward;
-        private bool isCatchingUp = false;
         private Vector3 lastPosition;
         private Vector3 lastCamPosition;
 
@@ -149,6 +163,10 @@ namespace ProspectorJourney.UI
             {
                 SnapToFront();
             }
+            else
+            {
+                PlantAtStationaryPosition();
+            }
         }
 
         public void PlayHoverSound()
@@ -176,7 +194,7 @@ namespace ProspectorJourney.UI
         public void OnClickStartExpedition()
         {
             PlayClickSound();
-            Debug.Log("[Prospector Journey] Start Expedition is COMING SOON!");
+            Debug.Log($"[Prospector Journey] Start Expedition to {mainGameScene} is COMING SOON!");
         }
 
         public void OnClickTutorial()
@@ -320,7 +338,7 @@ namespace ProspectorJourney.UI
         {
             // Game Options
             currentTurnType = (TurnTypeOption)PlayerPrefs.GetInt("VR_TurnType", PlayerPrefs.GetInt("VR_SnapTurn", 1) == 1 ? 0 : 1);
-            currentLocomotionType = (LocomotionTypeOption)PlayerPrefs.GetInt("VR_LocomotionType", 0);
+            currentLocomotionType = (LocomotionTypeOption)PlayerPrefs.GetInt("VR_LocomotionType", 1);
 
             if (snapTurnToggle != null)
             {
@@ -433,6 +451,14 @@ namespace ProspectorJourney.UI
             if (creditsPanel != null) creditsPanel.SetActive(creditsPanel == panelToShow);
         }
 
+        public void PlantAtStationaryPosition()
+        {
+            transform.position = stationaryWorldPosition;
+            transform.rotation = Quaternion.Euler(stationaryWorldEuler);
+            lastPosition = stationaryWorldPosition;
+            IsMenuMoving = false;
+        }
+
         public void SnapToFront()
         {
             if (!enableLazyFollow) return;
@@ -455,7 +481,6 @@ namespace ProspectorJourney.UI
             transform.rotation = ComputeTargetRotation(snapPos, currentHorizontalFacing);
             lastPosition = snapPos;
             lastCamPosition = targetCamera.position;
-            isCatchingUp = false;
             IsMenuMoving = false;
         }
 
@@ -494,19 +519,11 @@ namespace ProspectorJourney.UI
                 transform.position += camDelta;
             }
 
-            if (!isCatchingUp && angle > deadzoneAngle)
+            // Smoothly rotate facing direction towards camera gaze forward at all times
+            // When user looks around in VR, menu smoothly turns with head gaze without getting stuck
+            if (angle > 0.1f)
             {
-                isCatchingUp = true;
-            }
-            else if (isCatchingUp && angle < catchUpThreshold)
-            {
-                isCatchingUp = false;
-            }
-
-            // Smoothly align facing direction if catching up or walking
-            float rotSpeed = isCatchingUp ? followSpeed : (isPlayerWalking ? followSpeed * 0.75f : 0f);
-            if (rotSpeed > 0f)
-            {
+                float rotSpeed = Mathf.Lerp(followSpeed, followSpeed * 1.6f, Mathf.Clamp01(angle / 45f));
                 currentHorizontalFacing = Vector3.Slerp(currentHorizontalFacing, camFwd, rotSpeed * Time.deltaTime).normalized;
             }
 
@@ -533,11 +550,11 @@ namespace ProspectorJourney.UI
             Quaternion targetRot = ComputeTargetRotation(transform.position, currentHorizontalFacing);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, followSpeed * Time.deltaTime);
 
-            // Determine if the menu is considered in motion
+            // Determine if the menu is considered in active translational motion
             float moveDelta = (transform.position - lastPosition).sqrMagnitude;
             lastPosition = transform.position;
             lastCamPosition = camPos;
-            IsMenuMoving = isCatchingUp || (moveDelta > 0.0001f);
+            IsMenuMoving = isPlayerWalking || (moveDelta > 0.005f);
         }
 
         private Quaternion ComputeTargetRotation(Vector3 menuPos, Vector3 forwardDir)

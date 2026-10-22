@@ -19,11 +19,14 @@ namespace ProspectorJourney.Room
     public class PlayerBodyCollision : MonoBehaviour
     {
         [Header("Body Capsule Settings")]
+        [SerializeField] private float defaultHeadHeight = 1.67f;
         [SerializeField] private float bodyRadius = 0.24f;
         [SerializeField] private float stepOffset = 0.08f;
         [SerializeField] private float skinWidth = 0.025f;
         [SerializeField] private float minHeadHeight = 0.85f;
         [SerializeField] private float maxHeadHeight = 2.05f;
+
+        public float DefaultHeadHeight => defaultHeadHeight;
 
         private XROrigin m_XROrigin;
         private CharacterController m_CharacterController;
@@ -33,10 +36,67 @@ namespace ProspectorJourney.Room
 
         private Vector3 m_PrevRawCamLocal;
         private Vector3 m_CurrentOffsetLocalPos;
-        private float m_InitialOffsetY = 1.36144f;
+        private float m_InitialOffsetY = 1.67f;
         private float m_VerticalVelocity;
         private bool m_Initialized;
         private bool m_BeforeRenderRegistered;
+
+        public static bool IsRealVRDeviceActive()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return true;
+#else
+            // 1. If an XR Interaction Simulator is active in the scene, then simulator mode is active
+            var sim = Object.FindAnyObjectByType<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator>();
+            if (sim != null && sim.isActiveAndEnabled)
+            {
+                return false;
+            }
+
+            // 2. Check XRDisplaySubsystem
+            var displays = new System.Collections.Generic.List<UnityEngine.XR.XRDisplaySubsystem>();
+            SubsystemManager.GetSubsystems(displays);
+            foreach (var d in displays)
+            {
+                if (d.running) return true;
+            }
+
+            // 3. Check XRInputSubsystem
+            var inputs = new System.Collections.Generic.List<UnityEngine.XR.XRInputSubsystem>();
+            SubsystemManager.GetSubsystems(inputs);
+            foreach (var inp in inputs)
+            {
+                if (inp.running) return true;
+            }
+
+            // 4. Check InputDevices for active HMD
+            var headDevices = new System.Collections.Generic.List<UnityEngine.XR.InputDevice>();
+            UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(
+                UnityEngine.XR.InputDeviceCharacteristics.HeadMounted, 
+                headDevices);
+
+            foreach (var d in headDevices)
+            {
+                if (!d.isValid) continue;
+                string name = (d.name ?? "").ToLowerInvariant();
+                if (!name.Contains("mock") && !name.Contains("simulator"))
+                    return true;
+            }
+
+            // 5. Check InputSystem devices
+            foreach (var dev in UnityEngine.InputSystem.InputSystem.devices)
+            {
+                if (dev is UnityEngine.InputSystem.XR.XRHMD || dev is UnityEngine.InputSystem.XR.XRController)
+                {
+                    string dname = dev.name.ToLowerInvariant();
+                    if (!dname.Contains("simulat") && !dname.Contains("mock"))
+                        return true;
+                }
+            }
+
+            return false;
+#endif
+        }
 
         private void Awake()
         {
@@ -65,10 +125,21 @@ namespace ProspectorJourney.Room
 
             if (m_CameraOffsetTransform != null)
             {
-                m_InitialOffsetY = m_CameraOffsetTransform.localPosition.y;
-                if (m_InitialOffsetY < 0.1f)
-                    m_InitialOffsetY = 1.36144f;
-                m_CurrentOffsetLocalPos = new Vector3(0f, m_InitialOffsetY, 0f);
+                bool isFloorMode = m_XROrigin != null && (m_XROrigin.RequestedTrackingOriginMode == XROrigin.TrackingOriginMode.Floor || m_XROrigin.CurrentTrackingOriginMode == UnityEngine.XR.TrackingOriginModeFlags.Floor);
+                if (IsRealVRDeviceActive() && isFloorMode)
+                {
+                    m_InitialOffsetY = defaultHeadHeight;
+                    m_CameraOffsetTransform.localPosition = Vector3.zero;
+                    m_CameraOffsetTransform.localRotation = Quaternion.identity;
+                    m_CurrentOffsetLocalPos = Vector3.zero;
+                }
+                else
+                {
+                    m_InitialOffsetY = defaultHeadHeight > 0.1f ? defaultHeadHeight : 1.67f;
+                    m_CameraOffsetTransform.localPosition = new Vector3(0f, m_InitialOffsetY, 0f);
+                    m_CameraOffsetTransform.localRotation = Quaternion.identity;
+                    m_CurrentOffsetLocalPos = new Vector3(0f, m_InitialOffsetY, 0f);
+                }
             }
 
             ConfigureCharacterController();
@@ -120,9 +191,9 @@ namespace ProspectorJourney.Room
             m_CharacterController.minMoveDistance = 0.0001f;
             m_CharacterController.slopeLimit = 45f;
 
-            float h = Mathf.Clamp(m_InitialOffsetY, minHeadHeight, maxHeadHeight);
+            float h = (defaultHeadHeight >= minHeadHeight) ? defaultHeadHeight : 1.67f;
             m_CharacterController.height = h;
-            m_CharacterController.center = new Vector3(0f, h * 0.5f + skinWidth, 0f);
+            m_CharacterController.center = new Vector3(0f, h * 0.5f, 0f);
         }
 
         public void EnsureFurnitureColliders()
@@ -364,6 +435,46 @@ namespace ProspectorJourney.Room
             if (m_CharacterController == null || !m_CharacterController.enabled || m_CameraTransform == null || m_CameraOffsetTransform == null)
                 return;
 
+            bool isFloorMode = m_XROrigin != null && (m_XROrigin.RequestedTrackingOriginMode == XROrigin.TrackingOriginMode.Floor || m_XROrigin.CurrentTrackingOriginMode == UnityEngine.XR.TrackingOriginModeFlags.Floor);
+
+            if (IsRealVRDeviceActive() && isFloorMode)
+            {
+                // In Real VR (Meta Quest 3) or Floor tracking mode, tracking handles HMD and Controller positions naturally relative to floor.
+                // Camera Offset MUST stay at (0, 0, 0) so physical controllers and head are 1:1 with real hands/head.
+                if (m_CameraOffsetTransform.localPosition != Vector3.zero)
+                {
+                    m_CameraOffsetTransform.localPosition = Vector3.zero;
+                }
+                if (m_CameraOffsetTransform.localRotation != Quaternion.identity)
+                {
+                    m_CameraOffsetTransform.localRotation = Quaternion.identity;
+                }
+
+                // Update CharacterController height and center to match actual physical HMD position or calibrated default (1.67m)
+                float calibratedDefault = (defaultHeadHeight >= minHeadHeight) ? defaultHeadHeight : 1.67f;
+                float headY = (m_CameraTransform.localPosition.y > minHeadHeight)
+                    ? Mathf.Clamp(m_CameraTransform.localPosition.y, minHeadHeight, maxHeadHeight)
+                    : calibratedDefault;
+                m_CharacterController.height = headY;
+                float camX = m_CameraTransform.localPosition.x;
+                float camZ = m_CameraTransform.localPosition.z;
+                m_CharacterController.center = new Vector3(camX, headY * 0.5f, camZ);
+
+                // Apply simple gravity
+                if (Time.deltaTime > 0f)
+                {
+                    if (m_CharacterController.isGrounded && m_VerticalVelocity < 0f)
+                        m_VerticalVelocity = -1f;
+                    else
+                        m_VerticalVelocity += Physics.gravity.y * Time.deltaTime;
+
+                    Vector3 gravMove = new Vector3(0f, m_VerticalVelocity * Time.deltaTime, 0f);
+                    m_CharacterController.Move(gravMove);
+                }
+
+                return;
+            }
+
             Vector3 rawCamLocal = ReadRawHmdLocalPosition();
             if (!m_Initialized)
             {
@@ -374,7 +485,7 @@ namespace ProspectorJourney.Room
             Vector3 localDelta = rawCamLocal - m_PrevRawCamLocal;
             m_PrevRawCamLocal = rawCamLocal;
 
-            float headHeight = m_InitialOffsetY;
+            float headHeight = defaultHeadHeight > 0f ? defaultHeadHeight : m_InitialOffsetY;
             float clampedOffsetY = headHeight - rawCamLocal.y;
 
             // Counter-shift Camera Offset in XYZ so Main Camera AND both Left/Right Controllers
@@ -384,7 +495,7 @@ namespace ProspectorJourney.Room
             m_CameraOffsetTransform.localPosition = m_CurrentOffsetLocalPos;
 
             m_CharacterController.height = headHeight;
-            m_CharacterController.center = new Vector3(0f, headHeight * 0.5f + skinWidth, 0f);
+            m_CharacterController.center = new Vector3(0f, headHeight * 0.5f, 0f);
 
             // Convert HMD horizontal movement delta into CharacterController.Move on XR Origin
             Vector3 worldMove = Vector3.zero;
@@ -413,10 +524,23 @@ namespace ProspectorJourney.Room
 
         private void OnBeforeRender()
         {
+            bool isFloorMode = m_XROrigin != null && (m_XROrigin.RequestedTrackingOriginMode == XROrigin.TrackingOriginMode.Floor || m_XROrigin.CurrentTrackingOriginMode == UnityEngine.XR.TrackingOriginModeFlags.Floor);
+
+            if (IsRealVRDeviceActive() && isFloorMode)
+            {
+                // In real VR (Meta Quest 3) or Floor tracking mode, keep Camera Offset strictly at (0, 0, 0)
+                if (m_CameraOffsetTransform != null && m_CameraOffsetTransform.localPosition != Vector3.zero)
+                {
+                    m_CameraOffsetTransform.localPosition = Vector3.zero;
+                }
+                return;
+            }
+
             if (m_CameraOffsetTransform != null && m_Initialized)
             {
                 Vector3 rawCamLocal = m_CameraTransform != null ? m_CameraTransform.localPosition : m_PrevRawCamLocal;
-                float clampedOffsetY = m_InitialOffsetY - rawCamLocal.y;
+                float headHeight = defaultHeadHeight > 0f ? defaultHeadHeight : m_InitialOffsetY;
+                float clampedOffsetY = headHeight - rawCamLocal.y;
                 m_CameraOffsetTransform.localPosition = new Vector3(-rawCamLocal.x, clampedOffsetY, -rawCamLocal.z);
             }
         }

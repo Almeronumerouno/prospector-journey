@@ -7347,6 +7347,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1178791450436251564, guid: a2a0d931eebd6a1479e56fc82c3b78db, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503725, guid: a2a0d931eebd6a1479e56fc82c3b78db, type: 3}
       propertyPath: m_Name
       value: XR Origin (XR Rig)

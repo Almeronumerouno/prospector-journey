@@ -1,0 +1,315 @@
+
+==================================================
+GameObject: Section_Title (ID: 63793025)
+==================================================
+  Component: RectTransform (ID: 63793026)
+    m_SizeDelta: {x: 800, y: 60}
+    m_AnchoredPosition: {x: 0, y: -50}
+    m_AnchorMin: {x: 0.5, y: 1}
+    m_AnchorMax: {x: 0.5, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 63793028)
+  Component: MonoBehaviour (Script GUID: f4688fdb7df04437aeb418b961361dc5) (ID: 63793027)
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Material: {fileID: 0}
+    m_text: GAME OPTIONS
+    m_fontSize: 42
+    m_fontColor: {r: 1, g: 0.88, b: 0.55, a: 1}
+    m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+
+==================================================
+GameObject: Panels_Content (ID: 264329703)
+==================================================
+  Component: RectTransform (ID: 264329704)
+    m_SizeDelta: {x: -100, y: -220}
+    m_AnchoredPosition: {x: 0, y: -80}
+    m_AnchorMin: {x: 0, y: 0}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+
+==================================================
+GameObject: Title_Text (ID: 279430716)
+==================================================
+  Component: RectTransform (ID: 279430717)
+    m_SizeDelta: {x: 0, y: 85}
+    m_AnchoredPosition: {x: 0, y: -25}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 1}
+  Component: CanvasRenderer (ID: 279430719)
+  Component: MonoBehaviour (Script GUID: f4688fdb7df04437aeb418b961361dc5) (ID: 279430718)
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Material: {fileID: 0}
+    m_text: PROSPECTOR JOURNEY
+    m_fontSize: 70
+    m_fontColor: {r: 1, g: 0.78, b: 0.25, a: 1}
+    m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+
+==================================================
+GameObject: Header_Section (ID: 505553723)
+==================================================
+  Component: RectTransform (ID: 505553724)
+    m_SizeDelta: {x: 0, y: 180}
+    m_AnchoredPosition: {x: 0, y: 0}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 1}
+
+==================================================
+GameObject: Section_Title (ID: 747052802)
+==================================================
+  Component: RectTransform (ID: 747052803)
+    m_SizeDelta: {x: 800, y: 45}
+    m_AnchoredPosition: {x: 680, y: -52.5}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 0, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 747052805)
+  Component: MonoBehaviour (Script GUID: f4688fdb7df04437aeb418b961361dc5) (ID: 747052804)
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Material: {fileID: 0}
+    m_text: '- HOW TO BECOME A PROSPECTOR -'
+    m_fontSize: 28
+    m_fontColor: {r: 1, g: 0.8, b: 0.35, a: 1}
+    m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+
+==================================================
+GameObject: Row_TurnType (ID: 1031750534)
+==================================================
+  Component: RectTransform (ID: 1031750535)
+    m_SizeDelta: {x: 880, y: 76}
+    m_AnchoredPosition: {x: 0, y: 48}
+    m_AnchorMin: {x: 0.5, y: 0.5}
+    m_AnchorMax: {x: 0.5, y: 0.5}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1031750537)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1031750536)
+    m_Color: {r: 0.22, g: 0.15, b: 0.1, a: 0.75}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+
+==================================================
+GameObject: Gold_Divider (ID: 1073927727)
+==================================================
+  Component: RectTransform (ID: 1073927728)
+    m_SizeDelta: {x: 0, y: 4}
+    m_AnchoredPosition: {x: 0, y: 5}
+    m_AnchorMin: {x: 0.1, y: 0}
+    m_AnchorMax: {x: 0.9, y: 0}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1073927730)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1073927729)
+    m_Color: {r: 0.85, g: 0.65, b: 0.25, a: 0.8}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+
+==================================================
+GameObject: Frame_GameOptions (ID: 1148180395)
+==================================================
+  Component: RectTransform (ID: 1148180396)
+    m_SizeDelta: {x: 960, y: 260}
+    m_AnchoredPosition: {x: 0, y: -235}
+    m_AnchorMin: {x: 0.5, y: 1}
+    m_AnchorMax: {x: 0.5, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1148180399)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1148180398)
+    m_Color: {r: 0.14, g: 0.09, b: 0.06, a: 0.88}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+  Component: MonoBehaviour (Script GUID: e19747de3f5aca642ab2be37e372fb86) (ID: 1148180397)
+    m_EffectColor: {r: 0.65, g: 0.48, b: 0.28, a: 0.85}
+    m_EffectDistance: {x: 2.5, y: -2.5}
+
+==================================================
+GameObject: Inner_Board (ID: 1212624254)
+==================================================
+  Component: RectTransform (ID: 1212624255)
+    m_SizeDelta: {x: -8, y: -8}
+    m_AnchoredPosition: {x: 0, y: 0}
+    m_AnchorMin: {x: 0, y: 0}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1212624257)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1212624256)
+    m_Color: {r: 0.46274513, g: 0.30588236, b: 0.21960786, a: 0.60784316}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+
+==================================================
+GameObject: Btn_StartExpedition (ID: 1231874296)
+==================================================
+  Component: RectTransform (ID: 1231874297)
+    m_SizeDelta: {x: 620, y: 85}
+    m_AnchoredPosition: {x: 680, y: -91.4}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 0, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1231874301)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1231874300)
+    m_Color: {r: 0.6, g: 0.38, b: 0.12, a: 1}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+  Component: MonoBehaviour (Script GUID: 4e29b1a8efbd4b44bb3f3716e73f07ff) (ID: 1231874299)
+    m_Interactable: 1
+  Component: MonoBehaviour (Script GUID: 38f8717e7c47e084eb925967947877ac) (ID: 1231874298)
+
+==================================================
+GameObject: Btn_Settings (ID: 1251254214)
+==================================================
+  Component: RectTransform (ID: 1251254215)
+    m_SizeDelta: {x: 620, y: 72}
+    m_AnchoredPosition: {x: 680, y: -361.5}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 0, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1251254219)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1251254218)
+    m_Color: {r: 0.24, g: 0.18, b: 0.14, a: 1}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+  Component: MonoBehaviour (Script GUID: 4e29b1a8efbd4b44bb3f3716e73f07ff) (ID: 1251254217)
+    m_Interactable: 1
+  Component: MonoBehaviour (Script GUID: 38f8717e7c47e084eb925967947877ac) (ID: 1251254216)
+
+==================================================
+GameObject: Btn_SaveAndExit (ID: 1317975372)
+==================================================
+  Component: RectTransform (ID: 1317975373)
+    m_SizeDelta: {x: 440, y: 68}
+    m_AnchoredPosition: {x: 0, y: -440}
+    m_AnchorMin: {x: 0.5, y: 1}
+    m_AnchorMax: {x: 0.5, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1317975377)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1317975376)
+    m_Color: {r: 0.26, g: 0.17, b: 0.12, a: 1}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+  Component: MonoBehaviour (Script GUID: e19747de3f5aca642ab2be37e372fb86) (ID: 1317975375)
+    m_EffectColor: {r: 0.65, g: 0.48, b: 0.28, a: 0.85}
+    m_EffectDistance: {x: 2, y: -2}
+  Component: MonoBehaviour (Script GUID: 4e29b1a8efbd4b44bb3f3716e73f07ff) (ID: 1317975378)
+    m_Interactable: 1
+  Component: MonoBehaviour (Script GUID: 38f8717e7c47e084eb925967947877ac) (ID: 1317975374)
+
+==================================================
+GameObject: Gold_Frame (ID: 1319634031)
+==================================================
+  Component: RectTransform (ID: 1319634032)
+    m_SizeDelta: {x: -32, y: -32}
+    m_AnchoredPosition: {x: 0, y: 0}
+    m_AnchorMin: {x: 0, y: 0}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1319634034)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1319634033)
+    m_Color: {r: 0.75, g: 0.55, b: 0.22, a: 0.6}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+
+==================================================
+GameObject: VR_MainMenu_Canvas (ID: 1321170159)
+==================================================
+  Component: RectTransform (ID: 1321170165)
+    m_SizeDelta: {x: 1500, y: 950}
+    m_AnchoredPosition: {x: 0, y: 1.45}
+    m_AnchorMin: {x: 0.5, y: 0.5}
+    m_AnchorMax: {x: 0.5, y: 0.5}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: Canvas (ID: 1321170164)
+  Component: MonoBehaviour (Script GUID: dc42784cf147c0c48a680349fa168899) (ID: 1321170163)
+  Component: MonoBehaviour (Script GUID: 7951c64acb0fa62458bf30a60089fe2d) (ID: 1321170162)
+  Component: MonoBehaviour (Script GUID: db18e8806cc0e4b4ba3958644fcb627e) (ID: 1321170161)
+  Component: AudioSource (ID: 1321170160)
+  Component: CanvasGroup (ID: 1321170166)
+    m_Alpha: 1
+    m_Interactable: 1
+    m_BlocksRaycasts: 1
+
+==================================================
+GameObject: Settings_Panel (ID: 1398607371)
+==================================================
+  Component: RectTransform (ID: 1398607372)
+    m_SizeDelta: {x: 0, y: 0}
+    m_AnchoredPosition: {x: 0, y: 0}
+    m_AnchorMin: {x: 0, y: 0}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+
+==================================================
+GameObject: Row_LocomotionType (ID: 1587154060)
+==================================================
+  Component: RectTransform (ID: 1587154061)
+    m_SizeDelta: {x: 880, y: 76}
+    m_AnchoredPosition: {x: 0, y: -48}
+    m_AnchorMin: {x: 0.5, y: 0.5}
+    m_AnchorMax: {x: 0.5, y: 0.5}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1587154063)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1587154062)
+    m_Color: {r: 0.22, g: 0.15, b: 0.1, a: 0.75}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+
+==================================================
+GameObject: Board_Background (ID: 1687171002)
+==================================================
+  Component: RectTransform (ID: 1687171003)
+    m_SizeDelta: {x: 0, y: 0}
+    m_AnchoredPosition: {x: 0, y: 0}
+    m_AnchorMin: {x: 0, y: 0}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 1687171005)
+  Component: MonoBehaviour (Script GUID: fe87c0e1cc204ed48ad3b37840f39efc) (ID: 1687171004)
+    m_Color: {r: 0.12, g: 0.09, b: 0.07, a: 0.5}
+    m_Sprite: {fileID: 0}
+    m_Material: {fileID: 0}
+
+==================================================
+GameObject: Main_Buttons_Panel (ID: 1759804371)
+==================================================
+  Component: RectTransform (ID: 1759804372)
+    m_SizeDelta: {x: 0, y: 0}
+    m_AnchoredPosition: {x: 0, y: 0}
+    m_AnchorMin: {x: 0, y: 0}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: MonoBehaviour (Script GUID: 59f8146938fff824cb5fd77236b75775) (ID: 1759804373)
+
+==================================================
+GameObject: Subtitle_Text (ID: 1974459084)
+==================================================
+  Component: RectTransform (ID: 1974459085)
+    m_SizeDelta: {x: 0, y: 40}
+    m_AnchoredPosition: {x: 0, y: -110}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 1, y: 1}
+    m_Pivot: {x: 0.5, y: 1}
+  Component: CanvasRenderer (ID: 1974459087)
+  Component: MonoBehaviour (Script GUID: f4688fdb7df04437aeb418b961361dc5) (ID: 1974459086)
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Material: {fileID: 0}
+    m_text: VR GOLD PANNING & RIVER CLAIM SIMULATION
+    m_fontSize: 24
+    m_fontColor: {r: 0.92, g: 0.84, b: 0.72, a: 1}
+    m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+
+==================================================
+GameObject: Section_Title (ID: 2131072882)
+==================================================
+  Component: RectTransform (ID: 2131072883)
+    m_SizeDelta: {x: 800, y: 45}
+    m_AnchoredPosition: {x: 680, y: -80.33333}
+    m_AnchorMin: {x: 0, y: 1}
+    m_AnchorMax: {x: 0, y: 1}
+    m_Pivot: {x: 0.5, y: 0.5}
+  Component: CanvasRenderer (ID: 2131072885)
+  Component: MonoBehaviour (Script GUID: f4688fdb7df04437aeb418b961361dc5) (ID: 2131072884)
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Material: {fileID: 0}
+    m_text: '- ABOUT PROSPECTOR JOURNEY -'
+    m_fontSize: 28
+    m_fontColor: {r: 1, g: 0.8, b: 0.35, a: 1}
+    m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}

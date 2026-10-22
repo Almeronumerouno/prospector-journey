@@ -73,7 +73,6 @@ namespace ProspectorJourney.UI
                 pauseCtrl = FindAnyObjectByType<PauseMenuController>();
             }
 
-            bool test2 = false;
             if (pauseCtrl != null)
             {
                 pauseCtrl.PauseGame();
@@ -83,7 +82,6 @@ namespace ProspectorJourney.UI
                 {
                     Debug.Log("[AUDIT TEST 2] Pause menu successfully activated. Clicking Quit to Main Menu...");
                     pauseCtrl.OnClickQuitToMainMenu();
-                    test2 = true;
                     passedTests++;
                     Debug.Log("[AUDIT TEST 2 PASS] Quit to Main Menu invoked.");
                     WriteLog("[TEST 2 PASS] Pause toggled and OnClickQuitToMainMenu invoked.");
@@ -117,7 +115,6 @@ namespace ProspectorJourney.UI
             totalTests++;
             string loadedScene = SceneManager.GetActiveScene().name;
             var menuRig = FindAnyObjectByType<XROrigin>();
-            bool test3 = false;
 
             if (loadedScene == "Mainmenu scene" && menuRig != null)
             {
@@ -132,7 +129,6 @@ namespace ProspectorJourney.UI
 
                 if (rigAtOrigin && camNotAtCliffs)
                 {
-                    test3 = true;
                     passedTests++;
                     Debug.Log($"[AUDIT TEST 3 PASS] Player successfully anchored at Main Menu spawn: Rig={rigPos}, CamWorld={camWorldPos}");
                     WriteLog($"[TEST 3 PASS] Player anchored at (0, 0, 0): Rig={rigPos}, Cam={camWorldPos}");
@@ -153,7 +149,6 @@ namespace ProspectorJourney.UI
             // TEST 4: MAIN MENU REQUIRED COMPONENTS (PlayerBodyCollision & MainMenuPlayerAnchor)
             // -----------------------------------------------------------------------------------------
             totalTests++;
-            bool test4 = false;
             if (menuRig != null)
             {
                 var pbc = menuRig.GetComponent<PlayerBodyCollision>();
@@ -166,7 +161,6 @@ namespace ProspectorJourney.UI
 
                 if (pbcOk && anchorOk && ccOk)
                 {
-                    test4 = true;
                     passedTests++;
                     Debug.Log("[AUDIT TEST 4 PASS] PlayerBodyCollision, MainMenuPlayerAnchor, and CharacterController all active on XR Origin.");
                     WriteLog("[TEST 4 PASS] Collision & Anchor components active.");
@@ -182,7 +176,6 @@ namespace ProspectorJourney.UI
             // TEST 5: NO INVISIBLE WALLS & CLEAN FLOATING CANVAS COLLIDER
             // -----------------------------------------------------------------------------------------
             totalTests++;
-            bool test5 = false;
             var boundariesRoot = GameObject.Find("[Menu_Collision_Boundaries]");
             var canvasObj = GameObject.Find("VR_MainMenu_Canvas");
             var canvasCollider = canvasObj != null ? canvasObj.GetComponent<Collider>() : null;
@@ -192,7 +185,6 @@ namespace ProspectorJourney.UI
 
             if (noInvisibleWalls && canvasNotBlocking)
             {
-                test5 = true;
                 passedTests++;
                 Debug.Log("[AUDIT TEST 5 PASS] Invisible boundaries removed (free roaming enabled) and Canvas has no blocking collider.");
                 WriteLog("[TEST 5 PASS] No invisible walls & canvas does not block locomotion.");
@@ -207,7 +199,6 @@ namespace ProspectorJourney.UI
             // TEST 6: FREE LOCOMOTION ROAMING
             // -----------------------------------------------------------------------------------------
             totalTests++;
-            bool test6 = false;
             if (menuRig != null)
             {
                 var cc = menuRig.GetComponent<CharacterController>();
@@ -222,7 +213,6 @@ namespace ProspectorJourney.UI
 
                     if (playerMovedFreely)
                     {
-                        test6 = true;
                         passedTests++;
                         Debug.Log($"[AUDIT TEST 6 PASS] Player roams freely without artificial boundaries! Moved Z: {movedDist:F2}m");
                         WriteLog($"[TEST 6 PASS] Free locomotion: Moved Z={movedDist:F2}m");
@@ -239,7 +229,6 @@ namespace ProspectorJourney.UI
             // TEST 7: RESPONSIVE FOLLOW (CANVAS FOLLOWS PLAYER & STOPS WHEN PLAYER STOPS)
             // -----------------------------------------------------------------------------------------
             totalTests++;
-            bool test7 = false;
             if (canvasObj != null && menuRig != null)
             {
                 var controller = canvasObj.GetComponent<MainMenuVRController>();
@@ -262,7 +251,6 @@ namespace ProspectorJourney.UI
 
                 if (canvasFollowedPlayer && isStationaryWhenStopped)
                 {
-                    test7 = true;
                     passedTests++;
                     Debug.Log($"[AUDIT TEST 7 PASS] Responsive follow verified: Canvas followed player (dist={distToCam:F2}m) and stopped completely when player stopped (drift={drift:F4}m).");
                     WriteLog($"[TEST 7 PASS] Canvas follows player (dist={distToCam:F2}m) and stops cleanly when player stops (drift={drift:F4}m).");

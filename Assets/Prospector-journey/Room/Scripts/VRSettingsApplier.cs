@@ -24,7 +24,7 @@ namespace ProspectorJourney.UI
             if (rigObject == null) return;
 
             int turnType = PlayerPrefs.GetInt("VR_TurnType", PlayerPrefs.GetInt("VR_SnapTurn", 1) == 1 ? 0 : 1);
-            int locoType = PlayerPrefs.GetInt("VR_LocomotionType", 0);
+            int locoType = PlayerPrefs.GetInt("VR_LocomotionType", 1);
 
             // Locate children (direct, nested under Locomotion, or anywhere in hierarchy)
             Transform snapTurn = FindLocomotionChild(rigObject.transform, "SnapTurn") ?? FindLocomotionChild(rigObject.transform, "Turn");

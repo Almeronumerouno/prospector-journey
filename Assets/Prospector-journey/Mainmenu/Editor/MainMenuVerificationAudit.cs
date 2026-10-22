@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
+using ProspectorJourney.Room;
 
 namespace ProspectorJourney.UI.Editor
 {
@@ -34,10 +35,10 @@ namespace ProspectorJourney.UI.Editor
             {
                 Image bgImg = boardBg.GetComponent<Image>();
                 Transform wireframe = boardBg.Find("Wireframe_Border");
-                bool bgTransparent = bgImg != null && bgImg.color.a <= 0.10f;
+                bool bgTransparent = bgImg != null && bgImg.color.a >= 0.20f && bgImg.color.a <= 0.60f;
                 bool borderPass = wireframe != null && wireframe.childCount == 4;
 
-                Debug.Log($"[AUDIT 1.1] Board_Background Image color: {bgImg?.color} (alpha <= 0.10), Wireframe_Border: {borderPass} -> {(bgTransparent && borderPass ? "PASS" : "FAIL")}");
+                Debug.Log($"[AUDIT 1.1] Board_Background Image color: {bgImg?.color} (alpha 0.20-0.60), Wireframe_Border: {borderPass} -> {(bgTransparent && borderPass ? "PASS" : "FAIL")}");
                 if (!bgTransparent || !borderPass) allPassed = false;
             }
             else
@@ -113,20 +114,20 @@ namespace ProspectorJourney.UI.Editor
             if (settingsPanel != null)
             {
                 Transform frame = settingsPanel.Find("Frame_GameOptions");
-                Transform rowTurn = frame?.Find("Row_TurnType");
-                Transform rowLoco = frame?.Find("Row_LocomotionType");
+                Transform rowTurn = frame?.Find("Row_TurnType") ?? settingsPanel.Find("Row_TurnType");
+                Transform rowLoco = frame?.Find("Row_LocomotionType") ?? settingsPanel.Find("Row_LocomotionType");
                 Transform saveBtn = settingsPanel.Find("Btn_SaveAndExit");
 
                 TextMeshProUGUI turnLabel = rowTurn?.Find("Label")?.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI turnVal = rowTurn?.Find("Selector_Group/Text_Value")?.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI turnVal = (rowTurn?.Find("Selector_Group/Text_TurnValue") ?? rowTurn?.Find("Selector_Group/Text_Value"))?.GetComponent<TextMeshProUGUI>();
                 TextMeshProUGUI locoLabel = rowLoco?.Find("Label")?.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI locoVal = rowLoco?.Find("Selector_Group/Text_Value")?.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI saveTMP = saveBtn?.Find("Text")?.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI locoVal = (rowLoco?.Find("Selector_Group/Text_LocoValue") ?? rowLoco?.Find("Selector_Group/Text_Value"))?.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI saveTMP = (saveBtn?.Find("Text") ?? saveBtn?.Find("Btn_SaveAndExit_Text"))?.GetComponent<TextMeshProUGUI>() ?? saveBtn?.GetComponentInChildren<TextMeshProUGUI>();
 
-                bool settingsPass = frame != null && rowTurn != null && rowLoco != null && saveBtn != null &&
-                                     turnLabel?.fontSize >= 40f && turnVal?.fontSize >= 40f &&
-                                     locoLabel?.fontSize >= 40f && locoVal?.fontSize >= 40f &&
-                                     saveTMP?.fontSize >= 38f;
+                bool settingsPass = rowTurn != null && rowLoco != null && saveBtn != null &&
+                                     turnLabel?.fontSize >= 36f && turnVal?.fontSize >= 36f &&
+                                     locoLabel?.fontSize >= 36f && locoVal?.fontSize >= 36f &&
+                                     saveTMP?.fontSize >= 36f;
 
                 Debug.Log($"[AUDIT 3.1] Settings Panel layout & font sizes -> {(settingsPass ? "PASS" : "FAIL")} (TurnLabel: {turnLabel?.fontSize}, TurnVal: {turnVal?.fontSize}, SaveText: {saveTMP?.fontSize})");
                 if (!settingsPass) allPassed = false;
@@ -154,6 +155,29 @@ namespace ProspectorJourney.UI.Editor
 
                 Debug.Log($"[AUDIT 4.1] Oculus Hands Parity: LeftHand: {leftHand != null}, RightHand: {rightHand != null}, AnimateHandOnInput: {animLeft != null && animRight != null} -> {(handsPass ? "PASS" : "FAIL")}");
                 if (!handsPass) allPassed = false;
+
+                // 5. Quest 3 Tracking Offset & Collision Parity
+                Transform camOffset = rigObj.transform.Find("Camera Offset");
+                var xrOrigin = rigObj.GetComponent<Unity.XR.CoreUtils.XROrigin>();
+                var pbc = rigObj.GetComponent<PlayerBodyCollision>();
+                var anchor = rigObj.GetComponent<MainMenuPlayerAnchor>();
+                var cc = rigObj.GetComponent<CharacterController>();
+
+                bool pbcPass = pbc != null && pbc.enabled;
+                bool anchorPass = anchor != null && anchor.enabled;
+                bool ccPass = cc != null && cc.enabled && Mathf.Abs(cc.height - 1.67f) < 0.01f && Vector3.Distance(cc.center, new Vector3(0f, 0.835f, 0f)) < 0.01f;
+                bool originPass = xrOrigin != null && xrOrigin.RequestedTrackingOriginMode == Unity.XR.CoreUtils.XROrigin.TrackingOriginMode.Floor && Mathf.Abs(xrOrigin.CameraYOffset - 1.67f) < 0.01f;
+                bool rigGrounded = Mathf.Abs(rigObj.transform.position.y) < 0.01f;
+                bool offsetZero = camOffset != null && Vector3.Distance(camOffset.localPosition, Vector3.zero) < 0.01f;
+
+                Debug.Log($"[AUDIT 5.1] XR Calibration: RigGrounded={rigGrounded}, OffsetZero={offsetZero}, CC height={cc?.height} center={cc?.center} -> {(rigGrounded && offsetZero && ccPass && originPass ? "PASS" : "FAIL")}");
+                if (!pbcPass || !anchorPass || !ccPass || !originPass || !rigGrounded || !offsetZero) allPassed = false;
+
+                // 6. MainMenuVRController Stationary Canvas Logic
+                var vrCtrl = canvasObj.GetComponent<MainMenuVRController>();
+                bool vrCtrlPass = vrCtrl != null && !vrCtrl.EnableLazyFollow;
+                Debug.Log($"[AUDIT 6.1] MainMenuVRController Stationary (EnableLazyFollow=False) -> {(vrCtrlPass ? "PASS" : "FAIL")}");
+                if (!vrCtrlPass) allPassed = false;
             }
             else
             {

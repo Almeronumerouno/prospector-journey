@@ -1,0 +1,4478 @@
+[
+  {
+    "depth": 0,
+    "name": "VR_MainMenu_Canvas",
+    "go_id": "1321170159",
+    "transform_id": "1321170165",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        1500.0,
+        950.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        1.45
+      ],
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        1.85
+      ]
+    },
+    "components": [
+      {
+        "id": "1321170164",
+        "type": "Canvas",
+        "renderMode": 2,
+        "camera": "0"
+      },
+      {
+        "id": "1321170163",
+        "type": "MonoBehaviour",
+        "script_guid": "dc42784cf147c0c48a680349fa168899"
+      },
+      {
+        "id": "1321170162",
+        "type": "MonoBehaviour",
+        "script_guid": "7951c64acb0fa62458bf30a60089fe2d"
+      },
+      {
+        "id": "1321170161",
+        "type": "MonoBehaviour",
+        "script_guid": "db18e8806cc0e4b4ba3958644fcb627e",
+        "name": "MainMenuVRController"
+      },
+      {
+        "id": "1321170160",
+        "type": "AudioSource"
+      },
+      {
+        "id": "1321170166",
+        "type": "CanvasGroup",
+        "alpha": 1.0,
+        "interactable": 1,
+        "blocksRaycasts": 1
+      }
+    ]
+  },
+  {
+    "depth": 1,
+    "name": "Board_Background",
+    "go_id": "1687171002",
+    "transform_id": "1687171003",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1687171005",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1687171004",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.12,
+          0.09,
+          0.07,
+          0.5
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 2,
+    "name": "Gold_Frame",
+    "go_id": "1319634031",
+    "transform_id": "1319634032",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -32.0,
+        -32.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1319634034",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1319634033",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.75,
+          0.55,
+          0.22,
+          0.6
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 3,
+    "name": "Inner_Board",
+    "go_id": "1212624254",
+    "transform_id": "1212624255",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -8.0,
+        -8.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1212624257",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1212624256",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.46274513,
+          0.30588236,
+          0.21960786,
+          0.60784316
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 4,
+    "name": "Header_Section",
+    "go_id": "505553723",
+    "transform_id": "505553724",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        180.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": []
+  },
+  {
+    "depth": 5,
+    "name": "Title_Text",
+    "go_id": "279430716",
+    "transform_id": "279430717",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        85.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -25.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "279430719",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "279430718",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "PROSPECTOR JOURNEY",
+        "fontSize": 70.0,
+        "fontColor": [
+          1.0,
+          0.78,
+          0.25,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 3.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 5,
+    "name": "Subtitle_Text",
+    "go_id": "1974459084",
+    "transform_id": "1974459085",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        40.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -110.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1974459087",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1974459086",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "VR GOLD PANNING & RIVER CLAIM SIMULATION",
+        "fontSize": 24.0,
+        "fontColor": [
+          0.92,
+          0.84,
+          0.72,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 2.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 5,
+    "name": "Gold_Divider",
+    "go_id": "1073927727",
+    "transform_id": "1073927728",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        4.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        5.0
+      ],
+      "anchorMin": [
+        0.1,
+        0.0
+      ],
+      "anchorMax": [
+        0.9,
+        0.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1073927730",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1073927729",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.85,
+          0.65,
+          0.25,
+          0.8
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 4,
+    "name": "Panels_Content",
+    "go_id": "264329703",
+    "transform_id": "264329704",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -100.0,
+        -220.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -80.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": []
+  },
+  {
+    "depth": 5,
+    "name": "Main_Buttons_Panel",
+    "go_id": "1759804371",
+    "transform_id": "1759804372",
+    "isActive": false,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1759804373",
+        "type": "MonoBehaviour",
+        "script_guid": "59f8146938fff824cb5fd77236b75775",
+        "name": "VerticalLayoutGroup",
+        "padding": [
+          0,
+          0,
+          30,
+          20
+        ],
+        "spacing": 22.0,
+        "childAlignment": 4
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_StartExpedition",
+    "go_id": "1231874296",
+    "transform_id": "1231874297",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        620.0,
+        85.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -91.4
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1231874301",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1231874300",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.6,
+          0.38,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1231874299",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.6,
+          0.38,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.85,
+          0.6,
+          0.22,
+          1.0
+        ],
+        "pressedColor": [
+          1.0200001,
+          0.72,
+          0.264,
+          1.0
+        ],
+        "selectedColor": [
+          0.85,
+          0.6,
+          0.22,
+          1.0
+        ]
+      },
+      {
+        "id": "1231874298",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "661137788",
+    "transform_id": "661137789",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "661137791",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "661137790",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "START EXPEDITION",
+        "fontSize": 32.0,
+        "fontColor": [
+          1.0,
+          0.96,
+          0.88,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_Tutorial",
+    "go_id": "86302643",
+    "transform_id": "86302644",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        620.0,
+        72.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -229.70001
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "86302648",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "86302647",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.24,
+          0.18,
+          0.14,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "86302646",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.24,
+          0.18,
+          0.14,
+          1.0
+        ],
+        "highlightedColor": [
+          0.45,
+          0.32,
+          0.22,
+          1.0
+        ],
+        "pressedColor": [
+          0.54,
+          0.384,
+          0.264,
+          1.0
+        ],
+        "selectedColor": [
+          0.45,
+          0.32,
+          0.22,
+          1.0
+        ]
+      },
+      {
+        "id": "86302645",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "1622465505",
+    "transform_id": "1622465506",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1622465508",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1622465507",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "GAME TUTORIAL",
+        "fontSize": 26.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_Settings",
+    "go_id": "1251254214",
+    "transform_id": "1251254215",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        620.0,
+        72.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -361.5
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1251254219",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1251254218",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.24,
+          0.18,
+          0.14,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1251254217",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.24,
+          0.18,
+          0.14,
+          1.0
+        ],
+        "highlightedColor": [
+          0.45,
+          0.32,
+          0.22,
+          1.0
+        ],
+        "pressedColor": [
+          0.54,
+          0.384,
+          0.264,
+          1.0
+        ],
+        "selectedColor": [
+          0.45,
+          0.32,
+          0.22,
+          1.0
+        ]
+      },
+      {
+        "id": "1251254216",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "1248661603",
+    "transform_id": "1248661604",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1248661606",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1248661605",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "GAME OPTIONS",
+        "fontSize": 26.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_Credits",
+    "go_id": "14464313",
+    "transform_id": "14464314",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        620.0,
+        72.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -493.30002
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "14464318",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "14464317",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.24,
+          0.18,
+          0.14,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "14464316",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.24,
+          0.18,
+          0.14,
+          1.0
+        ],
+        "highlightedColor": [
+          0.45,
+          0.32,
+          0.22,
+          1.0
+        ],
+        "pressedColor": [
+          0.54,
+          0.384,
+          0.264,
+          1.0
+        ],
+        "selectedColor": [
+          0.45,
+          0.32,
+          0.22,
+          1.0
+        ]
+      },
+      {
+        "id": "14464315",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "347588514",
+    "transform_id": "347588515",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "347588517",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "347588516",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "CREDITS",
+        "fontSize": 26.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_Quit",
+    "go_id": "709187463",
+    "transform_id": "709187464",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        620.0,
+        62.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -620.10004
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "709187468",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "709187467",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.25,
+          0.12,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "709187466",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.25,
+          0.12,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.48,
+          0.2,
+          0.2,
+          1.0
+        ],
+        "pressedColor": [
+          0.57600003,
+          0.24000001,
+          0.24000001,
+          1.0
+        ],
+        "selectedColor": [
+          0.48,
+          0.2,
+          0.2,
+          1.0
+        ]
+      },
+      {
+        "id": "709187465",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "860825247",
+    "transform_id": "860825248",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "860825250",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "860825249",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "QUIT GAME",
+        "fontSize": 22.0,
+        "fontColor": [
+          0.92,
+          0.75,
+          0.75,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 5,
+    "name": "Settings_Panel",
+    "go_id": "1398607371",
+    "transform_id": "1398607372",
+    "isActive": false,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": []
+  },
+  {
+    "depth": 6,
+    "name": "Section_Title",
+    "go_id": "63793025",
+    "transform_id": "63793026",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        60.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -50.0
+      ],
+      "anchorMin": [
+        0.5,
+        1.0
+      ],
+      "anchorMax": [
+        0.5,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "63793028",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "63793027",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "GAME OPTIONS",
+        "fontSize": 42.0,
+        "fontColor": [
+          1.0,
+          0.88,
+          0.55,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 3.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Frame_GameOptions",
+    "go_id": "1148180395",
+    "transform_id": "1148180396",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        960.0,
+        260.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -235.0
+      ],
+      "anchorMin": [
+        0.5,
+        1.0
+      ],
+      "anchorMax": [
+        0.5,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1148180399",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1148180398",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.14,
+          0.09,
+          0.06,
+          0.88
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1148180397",
+        "type": "MonoBehaviour",
+        "script_guid": "e19747de3f5aca642ab2be37e372fb86",
+        "name": "Outline",
+        "effectColor": [
+          0.65,
+          0.48,
+          0.28,
+          0.85
+        ],
+        "effectDistance": [
+          2.5,
+          -2.5
+        ]
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Row_TurnType",
+    "go_id": "1031750534",
+    "transform_id": "1031750535",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        880.0,
+        76.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        48.0
+      ],
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1031750537",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1031750536",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.22,
+          0.15,
+          0.1,
+          0.75
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 8,
+    "name": "Label",
+    "go_id": "316049331",
+    "transform_id": "316049332",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        400.0,
+        50.0
+      ],
+      "anchoredPosition": [
+        30.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.5
+      ],
+      "anchorMax": [
+        0.0,
+        0.5
+      ],
+      "pivot": [
+        0.0,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "316049334",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "316049333",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "TURN TYPE",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          0.95,
+          0.85,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 4096,
+        "characterSpacing": 1.5,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 8,
+    "name": "Selector_Group",
+    "go_id": "923667834",
+    "transform_id": "923667835",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        340.0,
+        60.0
+      ],
+      "anchoredPosition": [
+        -25.0,
+        0.0
+      ],
+      "anchorMin": [
+        1.0,
+        0.5
+      ],
+      "anchorMax": [
+        1.0,
+        0.5
+      ],
+      "pivot": [
+        1.0,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": []
+  },
+  {
+    "depth": 9,
+    "name": "Btn_Prev",
+    "go_id": "146680552",
+    "transform_id": "146680553",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        52.0,
+        52.0
+      ],
+      "anchoredPosition": [
+        30.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.5
+      ],
+      "anchorMax": [
+        0.0,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "146680556",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "146680555",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "146680557",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.52,
+          0.36,
+          0.23,
+          1.0
+        ],
+        "pressedColor": [
+          0.68,
+          0.46,
+          0.28,
+          1.0
+        ],
+        "selectedColor": [
+          0.9607843,
+          0.9607843,
+          0.9607843,
+          1.0
+        ]
+      },
+      {
+        "id": "146680554",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 10,
+    "name": "Arrow",
+    "go_id": "315074623",
+    "transform_id": "315074624",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "315074626",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "315074625",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "<",
+        "fontSize": 32.0,
+        "fontColor": [
+          1.0,
+          0.86,
+          0.45,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 9,
+    "name": "Text_Value",
+    "go_id": "481765705",
+    "transform_id": "481765706",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        190.0,
+        52.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "481765707",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "481765708",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "SNAP",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 9,
+    "name": "Btn_Next",
+    "go_id": "759318956",
+    "transform_id": "759318957",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        52.0,
+        52.0
+      ],
+      "anchoredPosition": [
+        -30.0,
+        0.0
+      ],
+      "anchorMin": [
+        1.0,
+        0.5
+      ],
+      "anchorMax": [
+        1.0,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "759318960",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "759318959",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "759318961",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.52,
+          0.36,
+          0.23,
+          1.0
+        ],
+        "pressedColor": [
+          0.68,
+          0.46,
+          0.28,
+          1.0
+        ],
+        "selectedColor": [
+          0.9607843,
+          0.9607843,
+          0.9607843,
+          1.0
+        ]
+      },
+      {
+        "id": "759318958",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 10,
+    "name": "Arrow",
+    "go_id": "1584956268",
+    "transform_id": "1584956269",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1584956271",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1584956270",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "'>'",
+        "fontSize": 32.0,
+        "fontColor": [
+          1.0,
+          0.86,
+          0.45,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Row_LocomotionType",
+    "go_id": "1587154060",
+    "transform_id": "1587154061",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        880.0,
+        76.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -48.0
+      ],
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1587154063",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1587154062",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.22,
+          0.15,
+          0.1,
+          0.75
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 8,
+    "name": "Label",
+    "go_id": "1800098300",
+    "transform_id": "1800098301",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        400.0,
+        50.0
+      ],
+      "anchoredPosition": [
+        30.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.5
+      ],
+      "anchorMax": [
+        0.0,
+        0.5
+      ],
+      "pivot": [
+        0.0,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1800098303",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1800098302",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "LOCOMOTION TYPE",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          0.95,
+          0.85,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 4096,
+        "characterSpacing": 1.5,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 8,
+    "name": "Selector_Group",
+    "go_id": "441262231",
+    "transform_id": "441262232",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        340.0,
+        60.0
+      ],
+      "anchoredPosition": [
+        -25.0,
+        0.0
+      ],
+      "anchorMin": [
+        1.0,
+        0.5
+      ],
+      "anchorMax": [
+        1.0,
+        0.5
+      ],
+      "pivot": [
+        1.0,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": []
+  },
+  {
+    "depth": 9,
+    "name": "Btn_Prev",
+    "go_id": "571756245",
+    "transform_id": "571756246",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        52.0,
+        52.0
+      ],
+      "anchoredPosition": [
+        30.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.5
+      ],
+      "anchorMax": [
+        0.0,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "571756249",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "571756248",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "571756250",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.52,
+          0.36,
+          0.23,
+          1.0
+        ],
+        "pressedColor": [
+          0.68,
+          0.46,
+          0.28,
+          1.0
+        ],
+        "selectedColor": [
+          0.9607843,
+          0.9607843,
+          0.9607843,
+          1.0
+        ]
+      },
+      {
+        "id": "571756247",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 10,
+    "name": "Arrow",
+    "go_id": "989977773",
+    "transform_id": "989977774",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "989977776",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "989977775",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "<",
+        "fontSize": 32.0,
+        "fontColor": [
+          1.0,
+          0.86,
+          0.45,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 9,
+    "name": "Text_Value",
+    "go_id": "10370343",
+    "transform_id": "10370344",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        190.0,
+        52.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "10370345",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "10370346",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "TELEPORT",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 9,
+    "name": "Btn_Next",
+    "go_id": "1928942347",
+    "transform_id": "1928942348",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        52.0,
+        52.0
+      ],
+      "anchoredPosition": [
+        -30.0,
+        0.0
+      ],
+      "anchorMin": [
+        1.0,
+        0.5
+      ],
+      "anchorMax": [
+        1.0,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1928942351",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1928942350",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1928942352",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.52,
+          0.36,
+          0.23,
+          1.0
+        ],
+        "pressedColor": [
+          0.68,
+          0.46,
+          0.28,
+          1.0
+        ],
+        "selectedColor": [
+          0.9607843,
+          0.9607843,
+          0.9607843,
+          1.0
+        ]
+      },
+      {
+        "id": "1928942349",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 10,
+    "name": "Arrow",
+    "go_id": "494965121",
+    "transform_id": "494965122",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "494965124",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "494965123",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "'>'",
+        "fontSize": 32.0,
+        "fontColor": [
+          1.0,
+          0.86,
+          0.45,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_SaveAndExit",
+    "go_id": "1317975372",
+    "transform_id": "1317975373",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        440.0,
+        68.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -440.0
+      ],
+      "anchorMin": [
+        0.5,
+        1.0
+      ],
+      "anchorMax": [
+        0.5,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1317975377",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1317975376",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1317975375",
+        "type": "MonoBehaviour",
+        "script_guid": "e19747de3f5aca642ab2be37e372fb86",
+        "name": "Outline",
+        "effectColor": [
+          0.65,
+          0.48,
+          0.28,
+          0.85
+        ],
+        "effectDistance": [
+          2.0,
+          -2.0
+        ]
+      },
+      {
+        "id": "1317975378",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.26,
+          0.17,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.52,
+          0.36,
+          0.23,
+          1.0
+        ],
+        "pressedColor": [
+          0.68,
+          0.46,
+          0.28,
+          1.0
+        ],
+        "selectedColor": [
+          0.52,
+          0.36,
+          0.23,
+          1.0
+        ]
+      },
+      {
+        "id": "1317975374",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "482202902",
+    "transform_id": "482202903",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "482202905",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "482202904",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "SAVE AND EXIT",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          0.96,
+          0.9,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 2.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 5,
+    "name": "Tutorial_Panel",
+    "go_id": "1347507813",
+    "transform_id": "1347507814",
+    "isActive": false,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1347507815",
+        "type": "MonoBehaviour",
+        "script_guid": "59f8146938fff824cb5fd77236b75775",
+        "name": "VerticalLayoutGroup",
+        "padding": [
+          40,
+          40,
+          15,
+          15
+        ],
+        "spacing": 16.0,
+        "childAlignment": 4
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Section_Title",
+    "go_id": "747052802",
+    "transform_id": "747052803",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        45.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -52.5
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "747052805",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "747052804",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "'- HOW TO BECOME A PROSPECTOR -'",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          0.8,
+          0.35,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Card_1.",
+    "go_id": "285604148",
+    "transform_id": "285604149",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        850.0,
+        70.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -156.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "285604151",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "285604150",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.18,
+          0.13,
+          0.1,
+          0.85
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Title",
+    "go_id": "662166661",
+    "transform_id": "662166662",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        26.0
+      ],
+      "anchoredPosition": [
+        20.0,
+        -6.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "662166664",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "662166663",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "1. SCOOP SAND & GRAVEL",
+        "fontSize": 21.0,
+        "fontColor": [
+          1.0,
+          0.82,
+          0.35,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Description",
+    "go_id": "2106350438",
+    "transform_id": "2106350439",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -40.0,
+        -36.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -14.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "2106350441",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "2106350440",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "Use your hand shovel to scoop sand along the riverbank into your gold pan.",
+        "fontSize": 18.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Card_2.",
+    "go_id": "337982285",
+    "transform_id": "337982286",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        850.0,
+        70.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -272.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "337982288",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "337982287",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.18,
+          0.13,
+          0.1,
+          0.85
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Title",
+    "go_id": "1542305082",
+    "transform_id": "1542305083",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        26.0
+      ],
+      "anchoredPosition": [
+        20.0,
+        -6.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1542305085",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1542305084",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "2. SUBMERGE IN RIVER",
+        "fontSize": 21.0,
+        "fontColor": [
+          1.0,
+          0.82,
+          0.35,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Description",
+    "go_id": "758047211",
+    "transform_id": "758047212",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -40.0,
+        -36.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -14.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "758047214",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "758047213",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "Dip your filled pan into the running river water to wet the material.",
+        "fontSize": 18.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Card_3.",
+    "go_id": "1230242437",
+    "transform_id": "1230242438",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        850.0,
+        70.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -388.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1230242440",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1230242439",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.18,
+          0.13,
+          0.1,
+          0.85
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Title",
+    "go_id": "2010581504",
+    "transform_id": "2010581505",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        26.0
+      ],
+      "anchoredPosition": [
+        20.0,
+        -6.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "2010581507",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "2010581506",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "3. HORIZONTAL SHAKE",
+        "fontSize": 21.0,
+        "fontColor": [
+          1.0,
+          0.82,
+          0.35,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Description",
+    "go_id": "1570075648",
+    "transform_id": "1570075649",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -40.0,
+        -36.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -14.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1570075651",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1570075650",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "Shake your VR controller left-to-right. River current sweeps away light",
+        "fontSize": 18.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Card_4.",
+    "go_id": "457176112",
+    "transform_id": "457176113",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        850.0,
+        70.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -504.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "457176115",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "457176114",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.18,
+          0.13,
+          0.1,
+          0.85
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Title",
+    "go_id": "40340308",
+    "transform_id": "40340309",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        26.0
+      ],
+      "anchoredPosition": [
+        20.0,
+        -6.0
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "40340311",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "40340310",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "4. CLAIM YOUR GOLD",
+        "fontSize": 21.0,
+        "fontColor": [
+          1.0,
+          0.82,
+          0.35,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Description",
+    "go_id": "633464111",
+    "transform_id": "633464112",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -40.0,
+        -36.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        -14.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "633464114",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "633464113",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "Dense precious gold nuggets remain at the pan's bottom. Pick & sell them!",
+        "fontSize": 18.0,
+        "fontColor": [
+          0.92,
+          0.86,
+          0.78,
+          1.0
+        ],
+        "horizontalAlignment": 1,
+        "verticalAlignment": 256,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Tutorial_Buttons_Row",
+    "go_id": "1804971832",
+    "transform_id": "1804971833",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        850.0,
+        75.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -622.5
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1804971834",
+        "type": "MonoBehaviour",
+        "script_guid": "30649d3a9faa99c48a7b1166b86bf2a0"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Btn_LaunchTutorialScene",
+    "go_id": "892706438",
+    "transform_id": "892706439",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        400.0,
+        68.0
+      ],
+      "anchoredPosition": [
+        217.5,
+        -37.5
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "892706443",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "892706442",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.6,
+          0.38,
+          0.12,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "892706441",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.6,
+          0.38,
+          0.12,
+          1.0
+        ],
+        "highlightedColor": [
+          0.85,
+          0.6,
+          0.22,
+          1.0
+        ],
+        "pressedColor": [
+          1.0200001,
+          0.72,
+          0.264,
+          1.0
+        ],
+        "selectedColor": [
+          0.85,
+          0.6,
+          0.22,
+          1.0
+        ]
+      },
+      {
+        "id": "892706440",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 8,
+    "name": "Label",
+    "go_id": "1717058360",
+    "transform_id": "1717058361",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1717058363",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1717058362",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "OPEN TUTORIAL SCENE",
+        "fontSize": 24.0,
+        "fontColor": [
+          1.0,
+          0.96,
+          0.88,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Btn_BackFromTutorial",
+    "go_id": "1450380584",
+    "transform_id": "1450380585",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        350.0,
+        68.0
+      ],
+      "anchoredPosition": [
+        657.5,
+        -37.5
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1450380589",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1450380588",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.28,
+          0.2,
+          0.15,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1450380587",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.28,
+          0.2,
+          0.15,
+          1.0
+        ],
+        "highlightedColor": [
+          0.5,
+          0.36,
+          0.25,
+          1.0
+        ],
+        "pressedColor": [
+          0.6,
+          0.43200004,
+          0.3,
+          1.0
+        ],
+        "selectedColor": [
+          0.5,
+          0.36,
+          0.25,
+          1.0
+        ]
+      },
+      {
+        "id": "1450380586",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 8,
+    "name": "Label",
+    "go_id": "2020917585",
+    "transform_id": "2020917586",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "2020917588",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "2020917587",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "< BACK TO MAIN",
+        "fontSize": 24.0,
+        "fontColor": [
+          0.95,
+          0.9,
+          0.82,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 5,
+    "name": "Credits_Panel",
+    "go_id": "1285441568",
+    "transform_id": "1285441569",
+    "isActive": false,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1285441570",
+        "type": "MonoBehaviour",
+        "script_guid": "59f8146938fff824cb5fd77236b75775",
+        "name": "VerticalLayoutGroup",
+        "padding": [
+          60,
+          60,
+          20,
+          20
+        ],
+        "spacing": 25.0,
+        "childAlignment": 4
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Section_Title",
+    "go_id": "2131072882",
+    "transform_id": "2131072883",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        800.0,
+        45.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -80.33333
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "2131072885",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "2131072884",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "'- ABOUT PROSPECTOR JOURNEY -'",
+        "fontSize": 28.0,
+        "fontColor": [
+          1.0,
+          0.8,
+          0.35,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Credits_Card",
+    "go_id": "333742057",
+    "transform_id": "333742058",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        850.0,
+        260.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -333.5
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "333742060",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "333742059",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.18,
+          0.13,
+          0.1,
+          0.9
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Credits_Text",
+    "go_id": "1656324637",
+    "transform_id": "1656324638",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        -50.0,
+        -40.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1656324640",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1656324639",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "'<b>PROSPECTOR JOURNEY</b>",
+        "fontSize": 24.0,
+        "fontColor": [
+          0.94,
+          0.88,
+          0.8,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  },
+  {
+    "depth": 6,
+    "name": "Btn_BackFromCredits",
+    "go_id": "1829592956",
+    "transform_id": "1829592957",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        480.0,
+        68.0
+      ],
+      "anchoredPosition": [
+        680.0,
+        -598.1666
+      ],
+      "anchorMin": [
+        0.0,
+        1.0
+      ],
+      "anchorMax": [
+        0.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1829592961",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1829592960",
+        "type": "MonoBehaviour",
+        "script_guid": "fe87c0e1cc204ed48ad3b37840f39efc",
+        "name": "Image",
+        "color": [
+          0.28,
+          0.2,
+          0.15,
+          1.0
+        ],
+        "sprite": null,
+        "material": null,
+        "raycastTarget": 1,
+        "imageType": 0
+      },
+      {
+        "id": "1829592959",
+        "type": "MonoBehaviour",
+        "script_guid": "4e29b1a8efbd4b44bb3f3716e73f07ff",
+        "name": "Button",
+        "interactable": 1,
+        "normalColor": [
+          0.28,
+          0.2,
+          0.15,
+          1.0
+        ],
+        "highlightedColor": [
+          0.5,
+          0.36,
+          0.25,
+          1.0
+        ],
+        "pressedColor": [
+          0.6,
+          0.43200004,
+          0.3,
+          1.0
+        ],
+        "selectedColor": [
+          0.5,
+          0.36,
+          0.25,
+          1.0
+        ]
+      },
+      {
+        "id": "1829592958",
+        "type": "MonoBehaviour",
+        "script_guid": "38f8717e7c47e084eb925967947877ac",
+        "name": "VRButtonAudioFeedback"
+      }
+    ]
+  },
+  {
+    "depth": 7,
+    "name": "Label",
+    "go_id": "1127606016",
+    "transform_id": "1127606017",
+    "isActive": true,
+    "rect": {
+      "sizeDelta": [
+        0.0,
+        0.0
+      ],
+      "anchoredPosition": [
+        0.0,
+        0.0
+      ],
+      "anchorMin": [
+        0.0,
+        0.0
+      ],
+      "anchorMax": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "localPosition": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "components": [
+      {
+        "id": "1127606019",
+        "type": "CanvasRenderer"
+      },
+      {
+        "id": "1127606018",
+        "type": "MonoBehaviour",
+        "script_guid": "f4688fdb7df04437aeb418b961361dc5",
+        "name": "TextMeshProUGUI",
+        "text": "< BACK TO MAIN MENU",
+        "fontSize": 24.0,
+        "fontColor": [
+          0.95,
+          0.9,
+          0.82,
+          1.0
+        ],
+        "horizontalAlignment": 2,
+        "verticalAlignment": 512,
+        "characterSpacing": 0.0,
+        "lineSpacing": 0.0
+      }
+    ]
+  }
+]

@@ -67,19 +67,43 @@ namespace ProspectorJourney.UI
             {
                 if (m_Origin.CameraFloorOffsetObject != null)
                 {
-                    m_Origin.CameraFloorOffsetObject.transform.localPosition = new Vector3(0f, 1.36144f, 0f);
+                    bool isRealVR = PlayerBodyCollision.IsRealVRDeviceActive();
+                    if (isRealVR)
+                    {
+                        m_Origin.CameraFloorOffsetObject.transform.localPosition = Vector3.zero;
+                    }
+                    else
+                    {
+                        float eyeHeight = m_Origin.CameraYOffset > 0f ? m_Origin.CameraYOffset : 1.67f;
+                        m_Origin.CameraFloorOffsetObject.transform.localPosition = new Vector3(0f, eyeHeight, 0f);
+                    }
                     m_Origin.CameraFloorOffsetObject.transform.localRotation = Quaternion.identity;
                 }
-                if (m_Origin.Camera != null)
+                if (m_Origin.Camera != null && !PlayerBodyCollision.IsRealVRDeviceActive())
                 {
                     m_Origin.Camera.transform.localPosition = Vector3.zero;
                     m_Origin.Camera.transform.localRotation = Quaternion.identity;
+                }
+                if (!PlayerBodyCollision.IsRealVRDeviceActive())
+                {
+                    Transform camOffset = m_Origin.CameraFloorOffsetObject != null ? m_Origin.CameraFloorOffsetObject.transform : transform.Find("Camera Offset");
+                    if (camOffset != null)
+                    {
+                        Transform leftCtrl = camOffset.Find("Left Controller");
+                        Transform rightCtrl = camOffset.Find("Right Controller");
+                        if (leftCtrl != null)
+                            leftCtrl.localPosition = new Vector3(-0.22f, -0.57f, 0.45f);
+                        if (rightCtrl != null)
+                            rightCtrl.localPosition = new Vector3(0.22f, -0.57f, 0.45f);
+                    }
                 }
             }
         }
 
         public static void ResetAllSimulatorOffsets()
         {
+            if (PlayerBodyCollision.IsRealVRDeviceActive()) return;
+
             VRSimulatorSceneBinder.ResetSimulatedInputDevices();
             var sim = FindAnyObjectByType<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRInteractionSimulator>();
             if (sim != null)
